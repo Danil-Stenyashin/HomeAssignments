@@ -5,7 +5,11 @@
 ● st128493@student.spbu.ru
 
 
-#		Start the programm
+#  Start the programm
+#ispolzuem "make"      
 
+#chtoby zapustit pishem "./main"      
 
-● Запуск
+#posle zakrutiya ocheshaem file "./0"        
+
+✦✦✦ⓒⓞⓕⓕⓔⓔ✦ⓣⓘⓜⓔ✦✦✦
