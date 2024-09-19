@@ -10,7 +10,7 @@ void hello(){
 		if (str == "pause"){
 			break;
 		}
-		cout << "hello, " << str;
+		cout << "Hello, " << str << "!";
 	}
 	
 }
