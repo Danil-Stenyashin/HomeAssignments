@@ -10,6 +10,6 @@
 
 #chtoby zapustit pishem "./main"      
 
-#posle zakrutiya ocheshaem file "./0"        
+#posle zakrutiya ocheshaem file "make clean"        
 
 ✦✦✦ⓒⓞⓕⓕⓔⓔ✦ⓣⓘⓜⓔ✦✦✦
