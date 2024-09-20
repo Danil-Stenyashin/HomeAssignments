@@ -1,4 +1,4 @@
-● Задача Hello_wolrd_2
+    ● Hello_wolrd_2
 
 ● Stenyashin Danil Vladislavovich, 24.B81-mm
 
