@@ -7,7 +7,7 @@ Hello world programm
 #include "greet.h"
 
 int main() {
-	std::cout << "Hello, world!";
+	std::cout << "Programm is started \nHello, world! \nPlease, say your name. For exit press 'ctrl + c'  :p";
 	hello();
 	return 0;
 }
