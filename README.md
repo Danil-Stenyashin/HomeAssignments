@@ -11,5 +11,3 @@
 #For the start write "./main" in concole      
 
 #For correct close using "make clean"        
-
-✦✦✦ⓒⓞⓕⓕⓔⓔ✦ⓣⓘⓜⓔ✦✦✦
