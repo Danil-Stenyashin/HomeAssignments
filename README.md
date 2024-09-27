@@ -6,10 +6,10 @@
 
 
 #  Start the programm
-#ispolzuem "make"      
+#Use "make"      
 
-#chtoby zapustit pishem "./main"      
+#For the start write "./main" in concole      
 
-#posle zakrutiya ocheshaem file "make clean"        
+#For correct close using "make clean"        
 
 ✦✦✦ⓒⓞⓕⓕⓔⓔ✦ⓣⓘⓜⓔ✦✦✦
