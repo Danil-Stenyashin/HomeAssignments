@@ -13,24 +13,26 @@ int open() {
     const char* output_filename = "output.bin";
 
     // Открываем входной файл в бинарном режиме для чтения
-    ifstream input_file(input_filename, ios::binary);
+    std::ifstream infile;
+    infile.open("input.bin", std::ios::binary|std::ios::in);
+    
 
     // Проверяем, успешно ли открылся файл
-    if (!input_file.is_open()) {
+    if (!infile.is_open()) {
         std::cerr << "Ошибка открытия файла " << input_filename << std::endl;
         return 1;
     }
 
     // Получаем размер файла
-    input_file.seekg(0, ios::end);
-    size_t file_size = input_file.tellg();
-    input_file.seekg(0, ios::beg);
+    infile.seekg(0, ios::end);
+    size_t file_size = infile.tellg();
+    infile.seekg(0, ios::beg);
 
     // Выделяем память под массив
     char* buffer = new char[file_size];
 
     // Читаем файл в массив
-    input_file.read(buffer, file_size);
+    infile.read(buffer, file_size);
 
     // Разворачиваем массив
     for (size_t i = 0; i < file_size / 2; ++i) {
@@ -44,7 +46,7 @@ int open() {
     output_file.write(buffer, file_size);
 
     // Закрываем файлы
-    input_file.close();
+    infile.close();
     output_file.close();
 
     // Освобождаем память
