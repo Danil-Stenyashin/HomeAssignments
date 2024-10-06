@@ -1,14 +1,17 @@
 /* Danil Stenyashin st128493@student.spbu.ru
-Assigment2a_binary-open programm
+Assigment2a_binary-open programm / main
 */
 
-#include <iostream>
-#include <fstream>
-#include "open.cpp"
 
+#include "head.h"
+#include "open.cpp"
+#include "check.cpp"
+#include "size.cpp"
+
+ 
 int main() 
 {
-    open();
+    open_file();
     return 0;
 }
 
