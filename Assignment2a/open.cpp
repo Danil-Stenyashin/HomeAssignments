@@ -13,7 +13,7 @@ int open_file() {
     // Имя входного файла
     const char* input_filename = "input.bin";
     // Имя выходного файла
-    const char* output_filename = "output.bin";
+    const char* output_filename = "temppdf.pdf";
 
     // Открываем входной файл в бинарном режиме для чтения
     std::ifstream infile;
