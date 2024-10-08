@@ -5,7 +5,7 @@ Assigment2a_binary-open program / Opening and closing file
 #ifndef OPEN_CPP
 #define OPEN_CPP
 
-using namespace std;
+ 
 #include "size.cpp"
 #include "check.cpp"
 
@@ -39,7 +39,7 @@ int open_file() {
 
     // Разворачиваем массив
     for (size_t i = 0; i < file_size / 2; ++i) {
-        swap(buffer[i], buffer[file_size - i - 1]);
+        std::swap(buffer[i], buffer[file_size - i - 1]);
     }
 
     // Открываем выходной файл в бинарном режиме для записи
