@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 TARGET = main
-TRASH = output.bin
+TRASH = temppdf.bin
 
 SRCS = main.cpp
 
