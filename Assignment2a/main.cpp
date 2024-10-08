@@ -1,5 +1,5 @@
 /* Danil Stenyashin st128493@student.spbu.ru
-Assigment2a_binary-open programm / main
+Assigment2a_binary-open program / main
 */
 
 
