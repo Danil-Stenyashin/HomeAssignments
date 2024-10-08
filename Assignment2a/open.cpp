@@ -38,7 +38,7 @@ int open_file() {
     infile.read(buffer, file_size);
 
     // Разворачиваем массив
-    for (size_t i = 0; i < file_size / 2; ++i) {
+    for (long unsigned int i = 0; i < file_size / 2; ++i) {
         std::swap(buffer[i], buffer[file_size - i - 1]);
     }
 
