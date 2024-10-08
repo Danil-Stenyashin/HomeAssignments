@@ -6,7 +6,6 @@ Hello world programm
 #define HELLO_H
 #include <string>
 
-using namespace std;
 
 void hello();
 #endif
