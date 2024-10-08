@@ -1,5 +1,5 @@
 /* Danil Stenyashin st128493@student.spbu.ru
-Assigment2a_binary-open program / Checking the infile opening
+Assigment2a_binary-open programm / Checking the infile opening
 */
 
 #ifndef CHECK_CPP

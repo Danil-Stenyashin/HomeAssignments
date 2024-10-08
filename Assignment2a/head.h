@@ -1,12 +1,13 @@
 /* Danil Stenyashin st128493@student.spbu.ru
-Assigment2a_binary-open programm / HEADER
+Assigment programm
 */
 
-#ifndef ASSIa_H
-#define ASSIa_H
+#ifndef ASSI_H
+#define ASSI_H
 
 #include <iostream>
-#include <fstream>
+#include <string>
+#include "greet.h"
 
-
+void assi();
 #endif

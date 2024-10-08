@@ -1,15 +1,12 @@
 /* Danil Stenyashin st128493@student.spbu.ru
-Assigment2a_binary-open program / Opening and closing file
+Assigment2a_binary-open programm
 */
 
-#ifndef OPEN_CPP
-#define OPEN_CPP
-
+#include <iostream>
+#include <fstream>
 using namespace std;
-#include "size.cpp"
-#include "check.cpp"
 
-int open_file() {
+int open() {
     // Имя входного файла
     const char* input_filename = "input.bin";
     // Имя выходного файла
@@ -27,9 +24,9 @@ int open_file() {
     }
 
     // Получаем размер файла
-    
-    long unsigned int file_size = get_file_size(input_filename);
-   
+    infile.seekg(0, ios::end);
+    size_t file_size = infile.tellg();
+    infile.seekg(0, ios::beg);
 
     // Выделяем память под массив
     char* buffer = new char[file_size];
@@ -59,7 +56,5 @@ int open_file() {
 
     return 0;
 }
-
-#endif
 
 
