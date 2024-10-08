@@ -12,6 +12,7 @@ Assigment2a_binary-open program / Opening and closing file
 int open_file() {
     // Имя входного файла
     const char* input_filename = "input.bin";
+    
     // Имя выходного файла
     const char* output_filename = "temppdf.pdf";
 
@@ -21,13 +22,9 @@ int open_file() {
     
 
     // Проверяем, успешно ли открылся файл
-    if (!infile.is_open()) {
-        std::cerr << "Ошибка открытия файла " << input_filename << std::endl;
-        return 1;
-    }
-
-    // Получаем размер файла
+    check_file(input_filename);
     
+    // Получаем размер файла
     long unsigned int file_size = get_file_size(input_filename);
    
 
@@ -43,7 +40,7 @@ int open_file() {
     }
 
     // Открываем выходной файл в бинарном режиме для записи
-    ofstream output_file(output_filename, ios::binary);
+    std::ofstream output_file(output_filename, std::ios::binary);
 
     // Записываем массив в выходной файл
     output_file.write(buffer, file_size);
