@@ -17,7 +17,7 @@
 #	For the beginning check:
 1) Availability of the g++ compililer
 2) Starting the console
-3) Availability of the "source.pdf" (otherwise there will ba an error)
+3) Availability of the "source.bin" (otherwise there will be an error)
 
 #	For the start:
 1) Write "make" in console
