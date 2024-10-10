@@ -9,7 +9,7 @@ int calculatorPL(const std::string& expression){
     int top = -1; // Pointer to the stack
     
    
-    for (int i = 0; i < expression.length(); i++){
+    for (size_t i = 0; i < expression.length(); i++){
         while (isspace(expression[i])) {i++;}
         
         // Add the number
@@ -20,38 +20,56 @@ int calculatorPL(const std::string& expression){
                 i++;
             }
         stack[++top] = number;
+        
         }
-
+        
+        
+        // Writing operands
         else { 
             if (expression[i] == '+') {
                 while (top != 0){
                 stack[top - 1] += stack[top];
+                std::cout << stack[top - 1] << std::endl;
+                stack[top] = '\0';
                 top--;
                 }
             } else if (expression[i] == '-') {
-                while (top != 0){
-                stack[top - 1] -= stack[top];
+                while (top != 1){
+                stack[top - 1] += stack[top];
+                std::cout << stack[top - 1] << std::endl;
+                stack[top] = '\0';
                 top--;
                 }
+                stack[0] = stack[0] - stack[1];
+                stack[1] = '\0';
+                top--;
             } else if (expression[i] == '*') {
                 while (top != 0){
                 stack[top - 1] *= stack[top];
+                stack[top] = '\0';
                 top--;
                 }
             } else if (expression[i] == '/') {
                 if (stack[top] == 0) {
-                    std::cout << "Деление на ноль!" << std::endl;
+                    std::cout << "Devision on zero!!" << std::endl;
                     delete[] stack;
                     return 0;
                 }
-                while (top != 0){
-                stack[top - 1] /= stack[top];
+                while (top != 1){
+                stack[top - 1] *= stack[top];
+                stack[top] = '\0';
                 top--;
                 }
+                stack[0] = stack[0] / stack[1];
+                stack[1] = '\0';
+                top--;	
             }
-            i++; 
+            i++;  
          }  
     }
-    return stack[0];
+    int result = stack[top];
+    
+    return result;
+    
 }
 

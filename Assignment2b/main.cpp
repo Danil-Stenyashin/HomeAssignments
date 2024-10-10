@@ -13,7 +13,7 @@ int main()
     getline(std::cin, expression);
     
     int result = calculatorPL(expression);
-    std::cout << result << std::endl;
+    std::cout << "Your result: " << result << std::endl;
     return 0;
 }
 
