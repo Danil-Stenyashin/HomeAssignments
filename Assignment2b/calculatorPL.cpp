@@ -20,8 +20,8 @@ int calculatorPL(const std::string& expression){
                 number = number * 10 + (expression[i] - '0');
                 i++;
             }
-        stack[++top] = number; // Add the number in the top of the stack
-        
+            
+        stack[++top] = number; // Add the number in the top of the stack       
         }
         
         
@@ -32,23 +32,25 @@ int calculatorPL(const std::string& expression){
                 while (top != 0){
                 stack[top - 1] += stack[top];
                 top--;
-                }
-                
-            } else if (expression[i] == '-') {   // The loop first performs operations on numbers, then writes an element to 0
+                } 
+            } 
+            else if (expression[i] == '-') {   // The loop first performs operations on numbers, then writes an element to 0
                 while (top != 1){
                 stack[top - 1] += stack[top];
                 top--;
                 }
+                
                 stack[0] -= stack[1];
                 top--;
-                
-            } else if (expression[i] == '*') {
+            } 
+            else if (expression[i] == '*') {
                 while (top != 0){
                 stack[top - 1] *= stack[top];
                 top--;
                 }
                 
-            } else if (expression[i] == '/') {  //This part check if you devision by zero
+            } 
+            else if (expression[i] == '/') {  //This part check if you devision by zero
                 if (stack[top] == 0) {
                     std::cout << "Devision by zero!!" << std::endl;
                     delete[] stack; // Clean a stack
@@ -59,12 +61,16 @@ int calculatorPL(const std::string& expression){
                 stack[top - 1] *= stack[top];
                 top--;
                 }
+                
                 stack[0] /= stack[1];
                 top--;	
             }
+            
+            // Iteration
             i++;  
          }  
     }
+    
     int result = stack[top]; // The result is on the top of the stack
     delete[] stack; // Clean a stack
     return result; // Return result to main
