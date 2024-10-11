@@ -31,39 +31,35 @@ int calculatorPL(const std::string& expression){
             if (expression[i] == '+') {
                 while (top != 0){
                 stack[top - 1] += stack[top];
-                std::cout << stack[top - 1] << std::endl;
-                stack[top] = '\0';
                 top--;
                 }
+                
             } else if (expression[i] == '-') {   // The loop first performs operations on numbers, then writes an element to 0
                 while (top != 1){
                 stack[top - 1] += stack[top];
-                std::cout << stack[top - 1] << std::endl;
-                stack[top] = '\0';
                 top--;
                 }
-                stack[0] = stack[0] - stack[1];
-                stack[1] = '\0';
+                stack[0] -= stack[1];
                 top--;
+                
             } else if (expression[i] == '*') {
                 while (top != 0){
                 stack[top - 1] *= stack[top];
-                stack[top] = '\0';
                 top--;
                 }
+                
             } else if (expression[i] == '/') {  //This part check if you devision by zero
                 if (stack[top] == 0) {
                     std::cout << "Devision by zero!!" << std::endl;
                     delete[] stack; // Clean a stack
                     return 0;
                 }
+                
                 while (top != 1){ // The loop first performs operations on numbers, then writes an element to 0
                 stack[top - 1] *= stack[top];
-                stack[top] = '\0';
                 top--;
                 }
-                stack[0] = stack[0] / stack[1];
-                stack[1] = '\0';
+                stack[0] /= stack[1];
                 top--;	
             }
             i++;  
