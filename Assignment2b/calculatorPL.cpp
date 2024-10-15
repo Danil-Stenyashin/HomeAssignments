@@ -24,7 +24,6 @@ int calculatorPL(const std::string& expression){
         stack[++top] = number; // Add the number in the top of the stack       
         }
         
-        
         // Writing operands
         //The loop changes each previos stack and reaches the 0 element of the stack
         else { 

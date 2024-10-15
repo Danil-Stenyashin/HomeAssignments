@@ -11,14 +11,14 @@ Assigment2a_binary-open program / Opening and closing file
 
 int open_file() {
     // Имя входного файла
-    const char* input_filename = "source.pdf";
+    const char* input_filename = "source.bin";
     
     // Имя выходного файла
     const char* output_filename = "temppdf.bin";
 
     // Открываем входной файл в бинарном режиме для чтения
     std::ifstream infile;
-    infile.open("source.pdf", std::ios::binary|std::ios::in);
+    infile.open("source.bin", std::ios::binary|std::ios::in);
     
 
     // Проверяем, успешно ли открылся файл
