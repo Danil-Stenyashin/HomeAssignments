@@ -1,8 +1,48 @@
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
+#pragma once
+
+#include <string>
+#include "Weapon.h"
+
+enum class Direction {
+    Left,
+    Right,
+    Forward,
+    Back
+};
 
 class Transformer {
+public:
+    Transformer();
+    ~Transformer();
+    
+    
+    bool move();
+    bool turn(Direction dir);
+    bool jump();
+    bool fire();
+    bool ultimate();
+    bool transform();
+
+    unsigned int getLevel() const;
+    void setLevel(unsigned int level);
+
+    unsigned int getStrength() const;
+    void setStrength(unsigned int strength);
+
+    unsigned int getRange() const;
+    void setRange(unsigned int range);
+
+    unsigned int getFuel() const;
+    void setFuel(unsigned int fuel);
+
+    unsigned int getAmmo() const;
+    void setAmmo(unsigned int ammo);
+
+    const Weapon& getWeapon() const;
+    void setWeapon(const Weapon& weapon);
 
 private:
     unsigned int _level;
@@ -10,65 +50,8 @@ private:
     unsigned int _range;
     unsigned int _fuel;
     unsigned int _ammo;
-    Weapon _weapon;
-    Weapon* _newWeapon;
-    
-public:
-    Transformer();
-    ~Transformer();
 
-    bool move();
-    bool turn(Direction dir);
-    bool jump();
-    bool fire();
-    bool ultimate();
-    bool transform();
-    
-    
-    
-    
-    void SetLevel(unsigned int level) {
-        _level = level;
-    }
-    
-    unsigned int GetLevel() { 
-        return _level;
-    }
-    
-    void SetFuel(unsigned int fuel) {
-        _fuel = fuel;
-    }
-    
-    unsigned int GetFuel() { 
-        return _fuel;
-    }
-   
-    void SetAmmo(unsigned int ammo) {
-        _ammo = ammo;
-    }
-    
-    unsigned int GetAmmo() { 
-        return _ammo;
-    }
-    
-    
-    
-    unsigned int GetStrength() { 
-        return _strength;
-    }
-    
-    unsigned int GetRange() { 
-        return _range;
-    }
-    
-    void SetNewWeapon(Weapon* weapon) {
-        _newWeapon = weapon;
-    }
-    
-    Weapon* GetNewWeapon() const {
-        return _newWeapon;
-    }
-    
+    Weapon* _weapon;
 };
 
 #endif
