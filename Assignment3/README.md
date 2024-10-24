@@ -32,10 +32,10 @@
 # After launcing the program you can see the settings of the transformers
 
 # If you want to test this programm
-1) Start    *cmake-gui*    in terminal
+1) Start in terminal:    *cmake-gui*    
 2) Go to path build:    *mkdir build*
    			*cd build*
-3) Use command 	        # cmake ..
+3) Use command: 	        *cmake ..*
    
 
 For correct close write "make clean" in console
