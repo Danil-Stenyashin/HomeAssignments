@@ -1,5 +1,5 @@
-   // Weapon.h
-   #include <string>
+// Weapon.h
+#include <string>
 
 class Weapon {
 protected:
