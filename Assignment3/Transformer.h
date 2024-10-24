@@ -1,7 +1,6 @@
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
-#pragma once
 
 #include <string>
 #include "Weapon.h"

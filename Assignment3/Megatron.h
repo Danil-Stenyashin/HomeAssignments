@@ -1,4 +1,3 @@
-#pragma once
 #include "Transformer.h"
 
 class Megatron : public Transformer {

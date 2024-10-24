@@ -1,4 +1,3 @@
-#pragma once
 #include "Transformer.h"
 
 class Bumblebee : public Transformer {
