@@ -47,7 +47,7 @@ The project consists of several files:
    ```
 
 2. Compile the program:
-   - For Linux/macOS:
+   - For Linux:
 
      ```bash
      
