@@ -42,7 +42,7 @@ The project consists of several files:
 
    ```bash
    
-   git clone https://github.com/your-username/image-processing.git
+   git clone https://github.com/Danil-Stenyashin/HomeAssignments.git
 
    ```
 
