@@ -87,7 +87,7 @@ image-processing/
 ├── image_processing.h // Header file for image processing
 ├── image_processing.cpp // Functions for image rotation and Gaussian filtering
 ├── main.cpp           // Main entry point of the program
-└── input.bmp          // Input BMP image
+└── ----.bmp          // Input BMP image
 ```
 
 ---
