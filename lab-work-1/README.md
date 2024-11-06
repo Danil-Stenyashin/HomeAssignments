@@ -58,16 +58,27 @@ The project consists of several files:
 
 3. Run the program:
    - For Linux:
-
-     ./main
      
+     ```bash
+     
+     make run
+     
+     ```
 4. After running the program, it will:
    - Rotate the image 90° clockwise and save the result to `output_clockwise.bmp`.
    - Rotate the image 90° counterclockwise and save the result to `output_counterclockwise.bmp`.
    - Apply a Gaussian filter to the image and save the result to `output_gaussian.bmp`.
 
    Make sure you have a bmp image file in the same directory as the executable.
-
+   
+5. Close the program:
+   - For Linux:
+     
+     ```bash
+     
+     make clean
+     
+     ```
 ---
 
 ## Notes:

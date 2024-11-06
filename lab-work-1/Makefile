@@ -1,16 +1,31 @@
+# Makefile
+
+# Переменные
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall
-TARGET = main
+CXXFLAGS = -Werror -Wpedantic -Wall
+SRC = main.cpp bmp.cpp image_processing.cpp
+OBJ = $(SRC:.cpp=.o)
+EXEC = main
 
-SRCS = main.cpp
+# Правило по умолчанию
+all: $(EXEC)
 
-all: $(TARGET)
+# Линкование исполнимого файла
+$(EXEC): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o $(TARGET) 
- 
+# Компиляция исходных файлов
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Очистка промежуточных файлов
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJ) $(EXEC)
+
+# Прочие полезные команды
+run: $(EXEC)
+	./$(EXEC)
+
+format:
+	astyle --style=allman *.cpp *.h
+
