@@ -1,44 +1,44 @@
-// bmp.h
 #ifndef BMP_H
 #define BMP_H
 
 #include <vector>
 #include <string>
 
-// Структуры для заголовков BMP
+// BMP Header Structure
+// These structures define the layout of the BMP file and DIB header
 #pragma pack(push, 1)
 struct BMPHeader {
-    char signature[2];  // "BM"
-    uint32_t fileSize;
-    uint32_t reserved;
-    uint32_t dataOffset;
+    char signature[2];  // "BM" (2 bytes)
+    uint32_t fileSize;  // File size (4 bytes)
+    uint32_t reserved;  // Reserved field (4 bytes)
+    uint32_t dataOffset; // Offset to the pixel data (4 bytes)
 };
 
 struct DIBHeader {
-    uint32_t headerSize;
-    int32_t width;
-    int32_t height;
-    uint16_t colorPlanes;
-    uint16_t bpp; // bits per pixel (24 for RGB)
-    uint32_t compression;
-    uint32_t imageSize;
-    int32_t xRes;
-    int32_t yRes;
-    uint32_t colorsUsed;
-    uint32_t importantColors;
+    uint32_t headerSize;  // Size of this header (4 bytes)
+    int32_t width;        // Image width in pixels (4 bytes)
+    int32_t height;       // Image height in pixels (4 bytes)
+    uint16_t colorPlanes; // Number of color planes (always 1) (2 bytes)
+    uint16_t bpp;         // Bits per pixel (usually 24 for RGB) (2 bytes)
+    uint32_t compression; // Compression type (4 bytes)
+    uint32_t imageSize;   // Image size (4 bytes)
+    int32_t xRes;         // Horizontal resolution (4 bytes)
+    int32_t yRes;         // Vertical resolution (4 bytes)
+    uint32_t colorsUsed;  // Number of colors used (4 bytes)
+    uint32_t importantColors; // Number of important colors (4 bytes)
 };
 #pragma pack(pop)
 
-// Структура для пикселя
+// Pixel structure (representing one pixel in BGR format)
 struct Pixel {
-    uint8_t blue;
-    uint8_t green;
-    uint8_t red;
+    uint8_t blue;   // Blue channel (1 byte)
+    uint8_t green;  // Green channel (1 byte)
+    uint8_t red;    // Red channel (1 byte)
 };
 
-// Функции для загрузки и сохранения BMP
-void loadBMP(const std::string &filename, BMPHeader &bmpHeader, DIBHeader &dibHeader, std::vector<Pixel> &pixels);
-void saveBMP(const std::string &filename, const BMPHeader &bmpHeader, const DIBHeader &dibHeader, const std::vector<Pixel> &pixels);
+// Function declarations
+void loadBMP(const std::string& filename, BMPHeader& bmpHeader, DIBHeader& dibHeader, std::vector<Pixel>& pixels);
+void saveBMP(const std::string& filename, const BMPHeader& bmpHeader, const DIBHeader& dibHeader, const std::vector<Pixel>& pixels);
 
 #endif // BMP_H
 
