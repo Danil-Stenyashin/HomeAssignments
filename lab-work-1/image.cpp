@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <vector>
-
+// А Это откуда?)
 Image::Image(const string& filename) {
   ifstream file;
   file.open(filename, ios::binary | ios::in);
