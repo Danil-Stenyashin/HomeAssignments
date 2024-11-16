@@ -5,7 +5,8 @@
 #include <vector>
 
 // Function declarations for image processing operations
-
+// Все ниже тоже следовало бы сделать методами. Возможно выделить в класс только гаусса и агрегировать
+// его объект в картинку
 // Rotates the image 90 degrees clockwise
 void rotate90Clockwise(int width, int height, const std::vector<Pixel>& src, std::vector<Pixel>& dst);
 
