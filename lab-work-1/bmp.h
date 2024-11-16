@@ -35,7 +35,8 @@ struct Pixel {
     uint8_t green;  // Green channel (1 byte)
     uint8_t red;    // Red channel (1 byte)
 };
-
+// Очень много параметров и отсутствие инкапсуляции. Это следовало сделать методами класса картинки
+// И почти все эти параметры стали бы полями этого класса
 // Function declarations
 void loadBMP(const std::string& filename, BMPHeader& bmpHeader, DIBHeader& dibHeader, std::vector<Pixel>& pixels);
 void saveBMP(const std::string& filename, const BMPHeader& bmpHeader, const DIBHeader& dibHeader, const std::vector<Pixel>& pixels);
