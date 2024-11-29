@@ -2,59 +2,86 @@
 #include <fstream>
 #include <iostream>
 
-void loadBMP(const std::string& filename, BMPHeader& bmpHeader, DIBHeader& dibHeader, std::vector<Pixel>& pixels) {
+// Конструктор, который загружает BMP файл при создании объекта
+BMPImage::BMPImage(const std::string& filename) {
+    loadBMP(filename);  // Загружаем BMP файл при создании объекта
+}
+
+// Функция для загрузки BMP файла
+void BMPImage::loadBMP(const std::string& filename) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) {
         std::cerr << "Error opening BMP file!" << std::endl;
         return;
     }
 
-    // Function to load a BMP image
-    // It reads the headers (BMP and DIB) and the pixel data into a vector of pixels.
+    // Чтение BMP и DIB заголовков
     file.read(reinterpret_cast<char*>(&bmpHeader), sizeof(bmpHeader));
     if (bmpHeader.signature[0] != 'B' || bmpHeader.signature[1] != 'M') {
         std::cerr << "Invalid BMP file format!" << std::endl;
         return;
     }
 
-    // Read the BMP header
     file.read(reinterpret_cast<char*>(&dibHeader), sizeof(dibHeader));
-    if (dibHeader.bpp != 24) {
+    if (dibHeader.bpp != 24) {  // Проверка на поддерживаемый формат (24-бит)
         std::cerr << "Only 24-bit BMP images are supported!" << std::endl;
         return;
     }
 
-
-    // Calculate the row size considering padding
+    // Расчет размера строки с учетом паддинга
     size_t rowSize = dibHeader.width * 3 + (4 - (dibHeader.width * 3) % 4) % 4;
     pixels.resize(dibHeader.width * dibHeader.height);
-    // Move the file pointer to the start of the pixel data
+
+    // Перемещение указателя в файл на начало пиксельных данных
     file.seekg(bmpHeader.dataOffset, std::ios::beg);
-    // Read pixel data, starting from the bottom row (BMP stores pixels bottom to top)
+
+    // Чтение данных пикселей, начиная с нижней строки (BMP хранит изображения снизу вверх)
     for (int y = dibHeader.height - 1; y >= 0; --y) {
         file.read(reinterpret_cast<char*>(&pixels[y * dibHeader.width]), dibHeader.width * 3);
         file.seekg(rowSize - dibHeader.width * 3, std::ios::cur); // Паддинг
     }
 }
 
-// Function to save a BMP image
-// It writes the headers and pixel data to a file.
-void saveBMP(const std::string& filename, const BMPHeader& bmpHeader, const DIBHeader& dibHeader, const std::vector<Pixel>& pixels) {
+// Функция для сохранения BMP файла
+void BMPImage::saveBMP(const std::string& filename) const {
     std::ofstream file(filename, std::ios::binary);
     if (!file) {
         std::cerr << "Error opening BMP file for writing!" << std::endl;
         return;
     }
 
-
+    // Запись BMP и DIB заголовков
     file.write(reinterpret_cast<const char*>(&bmpHeader), sizeof(bmpHeader));
     file.write(reinterpret_cast<const char*>(&dibHeader), sizeof(dibHeader));
 
+    // Расчет размера строки с учетом паддинга
     size_t rowSize = dibHeader.width * 3 + (4 - (dibHeader.width * 3) % 4) % 4;
+    
+    // Запись данных пикселей, начиная с нижней строки (BMP хранит изображения снизу вверх)
     for (int y = dibHeader.height - 1; y >= 0; --y) {
         file.write(reinterpret_cast<const char*>(&pixels[y * dibHeader.width]), dibHeader.width * 3);
-        uint8_t padding[3] = {0, 0, 0};
+        uint8_t padding[3] = {0, 0, 0};  // Добавление паддинга
         file.write(reinterpret_cast<const char*>(&padding), rowSize - dibHeader.width * 3);
     }
+}
+
+// Геттер для пикселей
+const std::vector<Pixel>& BMPImage::getPixels() const {
+    return pixels;
+}
+
+// Сеттер для пикселей
+void BMPImage::setPixels(const std::vector<Pixel>& newPixels) {
+    pixels = newPixels;
+}
+
+// Геттер для DIB заголовка
+const DIBHeader& BMPImage::getDIBHeader() const {
+    return dibHeader;
+}
+
+// Геттер для BMP заголовка
+const BMPHeader& BMPImage::getBMPHeader() const {
+    return bmpHeader;
 }
 

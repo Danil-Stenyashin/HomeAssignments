@@ -5,7 +5,6 @@
 #include <string>
 
 // BMP Header Structure
-// These structures define the layout of the BMP file and DIB header
 #pragma pack(push, 1)
 struct BMPHeader {
     char signature[2];  // "BM" (2 bytes)
@@ -29,17 +28,30 @@ struct DIBHeader {
 };
 #pragma pack(pop)
 
-// Pixel structure (representing one pixel in BGR format)
 struct Pixel {
-    uint8_t blue;   // Blue channel (1 byte)
-    uint8_t green;  // Green channel (1 byte)
-    uint8_t red;    // Red channel (1 byte)
+    uint8_t blue;
+    uint8_t green;
+    uint8_t red;
 };
-// Очень много параметров и отсутствие инкапсуляции. Это следовало сделать методами класса картинки
-// И почти все эти параметры стали бы полями этого класса
-// Function declarations
-void loadBMP(const std::string& filename, BMPHeader& bmpHeader, DIBHeader& dibHeader, std::vector<Pixel>& pixels);
-void saveBMP(const std::string& filename, const BMPHeader& bmpHeader, const DIBHeader& dibHeader, const std::vector<Pixel>& pixels);
+
+class BMPImage {
+public:
+    BMPImage(const std::string& filename);
+    
+    const BMPHeader& getBMPHeader() const;
+    const DIBHeader& getDIBHeader() const;
+    const std::vector<Pixel>& getPixels() const;
+    void setPixels(const std::vector<Pixel>& newPixels);
+    
+    void saveBMP(const std::string& filename) const;
+
+private:
+    BMPHeader bmpHeader;
+    DIBHeader dibHeader;
+    std::vector<Pixel> pixels;
+
+    void loadBMP(const std::string& filename);
+};
 
 #endif // BMP_H
 
