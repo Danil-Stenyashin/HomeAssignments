@@ -1,7 +1,6 @@
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
-
 #include <string>
 #include "Weapon.h"
 
@@ -16,7 +15,7 @@ class Transformer {
 public:
     Transformer();
     ~Transformer();
-    
+
     bool move();
     bool turn(Direction dir);
     bool jump();
@@ -42,6 +41,11 @@ public:
     const Weapon& getWeapon() const;
     void setWeapon(const Weapon& weapon);
 
+    const Weapon& getPrimaryWeapon() const;
+    void setPrimaryWeapon(const Weapon& weapon);
+
+    const Weapon& getSecondaryWeapon() const;
+    void setSecondaryWeapon(const Weapon& weapon);
 
 private:
     unsigned int _level;
@@ -49,12 +53,11 @@ private:
     unsigned int _range;
     unsigned int _fuel;
     unsigned int _ammo;
+
+    Weapon* _weapon;
     Weapon _primaryWeapon;
     Weapon _secondaryWeapon;
-    
-    Weapon* _weapon;
 };
 
-#endif
-
+#endif 
 

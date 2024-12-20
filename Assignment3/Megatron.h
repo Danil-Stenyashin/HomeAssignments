@@ -21,4 +21,5 @@ private:
     unsigned int _tankArmor;
 };
 
-#endif // MEGATRON_H
+#endif
+

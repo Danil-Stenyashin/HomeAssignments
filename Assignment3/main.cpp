@@ -1,20 +1,21 @@
+#include "head.h"
 #include <iostream>
 #include "Transformer.h"
 #include "OptimusPrime.h"
 #include "Bumblebee.h"
 #include "Megatron.h"
+#include <gtest/gtest.h>
 
 int main() {
 
+    // Создаем объекты
     Transformer transformer;
     OptimusPrime optimusPrime;
-    Bumblebee bumblebee;
     Megatron megatron;
     Weapon myWeapon;
+    Bumblebee bumblebee;  
     
-    
-
-
+    // Вывод информации о трансформерах
     std::cout << "Default transformer:" << std::endl;
     std::cout << "Level: " << transformer.getLevel() << std::endl;
     std::cout << "Strength: " << transformer.getStrength() << std::endl;
@@ -51,4 +52,4 @@ int main() {
 
     return 0;
 }
-  
+

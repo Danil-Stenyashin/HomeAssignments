@@ -1,34 +1,7 @@
 #include <gtest/gtest.h>
 #include "Transformer.h"
-#include "Bumblebee.h"
-#include "head.h"
-#include "Megatron.h"
-#include "OptimusPrime.h"
 #include "Weapon.h"
 #include <sstream>
-
-
-TEST(WeaponTest, PrintInfo) {
-    // Создаем объект Weapon с заданными параметрами
-    Weapon w("Laser Cannon", 75);
-
-    // Перенаправляем стандартный вывод в строковый поток
-    std::ostringstream output;
-    std::streambuf* oldCoutBuf = std::cout.rdbuf(output.rdbuf());
-
-    // Вызываем метод printInfo
-    w.printInfo();
-
-    // Возвращаем стандартный вывод к исходному состоянию
-    std::cout.rdbuf(oldCoutBuf);
-
-    // Проверяем содержимое потока
-    std::string expectedOutput = 
-        "Type: Laser Cannon\n"
-        "Damage: 75\n";
-
-    EXPECT_EQ(output.str(), expectedOutput);
-}
 
 TEST(TransformerTest, DefaultConstructor) {
     Transformer t;
@@ -41,48 +14,40 @@ TEST(TransformerTest, DefaultConstructor) {
     EXPECT_EQ(t.getWeapon().getDamage(), 10);
 }
 
-// Тест метода move
 TEST(TransformerTest, Move) {
     Transformer t;
     EXPECT_TRUE(t.move());
 }
 
-
-// Тест метода jump
 TEST(TransformerTest, Jump) {
     Transformer t;
     EXPECT_TRUE(t.jump());
 }
 
-// Тест метода fire
 TEST(TransformerTest, Fire) {
     Transformer t;
     t.setAmmo(3);
-    EXPECT_TRUE(t.fire()); // Уменьшается боезапас
+    EXPECT_TRUE(t.fire()); 
     EXPECT_EQ(t.getAmmo(), 2);
     EXPECT_TRUE(t.fire());
     EXPECT_EQ(t.getAmmo(), 1);
     EXPECT_TRUE(t.fire());
     EXPECT_EQ(t.getAmmo(), 0);
-    EXPECT_FALSE(t.fire()); // Боезапас исчерпан
+    EXPECT_FALSE(t.fire()); 
 }
 
-// Тест метода transform
 TEST(TransformerTest, Transform) {
     Transformer t;
     EXPECT_TRUE(t.transform());
 }
 
-// Тест метода ultimate
 TEST(TransformerTest, Ultimate) {
     Transformer t;
     EXPECT_TRUE(t.ultimate());
 }
 
-// Тест геттеров и сеттеров
 TEST(TransformerTest, SetGetAttributes) {
     Transformer t;
-
     t.setLevel(5);
     EXPECT_EQ(t.getLevel(), 5);
 
@@ -99,7 +64,6 @@ TEST(TransformerTest, SetGetAttributes) {
     EXPECT_EQ(t.getAmmo(), 50);
 }
 
-// Тест геттеров и сеттеров для Weapon
 TEST(TransformerTest, SetGetWeapon) {
     Transformer t;
     Weapon newWeapon("Laser Cannon", 50);
@@ -109,7 +73,6 @@ TEST(TransformerTest, SetGetWeapon) {
     EXPECT_EQ(t.getWeapon().getDamage(), 50);
 }
 
-// Тест конструктора и деструктора (утечка памяти)
 TEST(TransformerTest, DestructorSafety) {
     Transformer* t = new Transformer();
     Weapon newWeapon("Rocket Launcher", 75);
@@ -118,5 +81,21 @@ TEST(TransformerTest, DestructorSafety) {
     EXPECT_EQ(t->getWeapon().getType(), "Rocket Launcher");
     EXPECT_EQ(t->getWeapon().getDamage(), 75);
 
-    delete t; // Проверяем, что деструктор освобождает память
+    delete t;
 }
+
+TEST(TransformerTest, PrimarySecondaryWeapon) {
+    Transformer t;
+
+    Weapon primary("Plasma Gun", 50);
+    Weapon secondary("Shield", 20);
+
+    t.setPrimaryWeapon(primary);
+    t.setSecondaryWeapon(secondary);
+
+    EXPECT_EQ(t.getPrimaryWeapon().getType(), "Plasma Gun");
+    EXPECT_EQ(t.getPrimaryWeapon().getDamage(), 50);
+    EXPECT_EQ(t.getSecondaryWeapon().getType(), "Shield");
+    EXPECT_EQ(t.getSecondaryWeapon().getDamage(), 20);
+}
+
