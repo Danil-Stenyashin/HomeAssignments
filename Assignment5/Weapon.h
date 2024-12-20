@@ -2,24 +2,31 @@
 #define WEAPON_H
 
 #include <string>
+#include <iostream>
 
-class Weapon {
+class Weapon
+{
 protected:
     std::string type;
     int damage;
 
 public:
-       
-    Weapon() : type("AK-47"), damage(40) {}
-    Weapon(const std::string& type, int damage) : type(type), damage(damage) {}
+    Weapon();
 
-    const std::string& getType() const { return type; }
-    const int& getDamage() const { return damage; }
+    Weapon(const std::string& name, int damage);
 
-    void setType(const std::string& type) { this->type = type; }
-    void setDamage(int damage) { this->damage = damage; }
+    const std::string& getType() const;
+    void setType(const std::string& name);
+    
+    const int& getDamage() const;
+    void setDamage(int speed);
+    
+    
 
-    void printInfo() const;
-};
-   
-#endif // WEAPON_H
+    friend std::ostream& operator<<(std::ostream& os, const Weapon& t);
+
+    bool operator>(const Weapon& other) const;
+    bool operator<(const Weapon& other) const;};
+
+
+#endif

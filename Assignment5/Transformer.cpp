@@ -1,77 +1,120 @@
+#include <string>
+#include <iostream>
+#include "Vehicle.h"
+#include "Weapon.h"
 #include "Transformer.h"
-#include <iostream>  // Для оператора <<
 
-Transformer::Transformer() : _level(1), _strength(100), _range(5), _fuel(100), _ammo(100), _weapon(new Weapon("Default Weapon", 10)) {}
 
-Transformer::Transformer(unsigned int level, unsigned int strength, unsigned int range, unsigned int fuel, unsigned int ammo, const Weapon& weapon)
-    : _level(level), _strength(strength), _range(range), _fuel(fuel), _ammo(ammo), _weapon(new Weapon(weapon)) {}
 
-Transformer::~Transformer() {
-    delete _weapon;
+void Transformer::ulta() const {
+    std::cout << "Executing ulta for Transformer: " << name << std::endl;
 }
 
-bool Transformer::move() { return true; }
-
-bool Transformer::turn(Direction dir) { return true; }
-
-bool Transformer::jump() { return true; }
-
-bool Transformer::fire() {
-    if (_ammo > 0) {
-        _ammo--;
-        return true;
-    }
-    return false;
+Transformer::Transformer()
+    :name("Unknown"), health(100), level(1), strength(10), perception(10), weapon(), vehicle(nullptr){
+    std::cout << "Transformer " << name << " is created." << std::endl;
 }
 
-bool Transformer::ultimate() { return true; }
-
-bool Transformer::transform() { return true; }
-
-unsigned int Transformer::getLevel() const { return _level; }
-
-void Transformer::setLevel(unsigned int level) { _level = level; }
-
-unsigned int Transformer::getStrength() const { return _strength; }
-
-void Transformer::setStrength(unsigned int strength) { _strength = strength; }
-
-unsigned int Transformer::getRange() const { return _range; }
-
-void Transformer::setRange(unsigned int range) { _range = range; }
-
-unsigned int Transformer::getFuel() const { return _fuel; }
-
-void Transformer::setFuel(unsigned int fuel) { _fuel = fuel; }
-
-unsigned int Transformer::getAmmo() const { return _ammo; }
-
-void Transformer::setAmmo(unsigned int ammo) { _ammo = ammo; }
-
-const Weapon& Transformer::getWeapon() const { return *_weapon; }
-
-void Transformer::setWeapon(const Weapon& weapon) {
-    delete _weapon;
-    _weapon = new Weapon(weapon);
+Transformer::Transformer(const std::string& name, unsigned health, unsigned level, unsigned strength, unsigned perception, const Weapon& weapon)
+    :name(name), health(health), level(level), strength(strength), perception(perception), weapon(weapon), vehicle(nullptr){
+    std::cout << "Transformer " << name << " is created." << std::endl;
 }
 
-// Оператор сравнения
-bool Transformer::operator>(const Transformer& other) const {
-    return _strength > other._strength;
+Transformer::~Transformer(){
+    std::cout << "Transformer " << name << " is destroyed." << std::endl;
 }
 
-bool Transformer::operator<(const Transformer& other) const {
-    return _strength < other._strength;
-}
-
-// Оператор вывода
-std::ostream& operator<<(std::ostream& os, const Transformer& t) {
-    os << "Level: " << t.getLevel() << "\n";
-    os << "Strength: " << t.getStrength() << "\n";
-    os << "Range: " << t.getRange() << "\n";
-    os << "Fuel: " << t.getFuel() << "\n";
-    os << "Ammo: " << t.getAmmo() << "\n";
-    os << "Weapon: " << t.getWeapon().getType() << " (Damage: " << t.getWeapon().getDamage() << ")\n";
+std::ostream& operator<<(std::ostream& os, const Transformer& t){
+    os << "Transformer: " << t.getName() << "\n"
+       << "Health: " << t.getHealth() << "\n"
+       << "Level: " << t.getLevel() << "\n"
+       << "Strength: " << t.getStrength() << "\n"
+       << "Perception: " << t.getPerception() << "\n"
+       << "Weapon: " << t.weapon.getType() << " (Damage: " << t.weapon.getDamage() << ") \n";
     return os;
+}
+
+bool Transformer::operator>(const Transformer& other) const{
+    return strength > other.strength;
+}
+
+bool Transformer::operator<(const Transformer& other) const{
+    return strength < other.strength;
+}
+
+
+const std::string& Transformer::getName() const{
+    return name;
+}
+void Transformer::setName(const std::string& name){
+    this->name = name;
+}
+
+
+
+const unsigned& Transformer::getHealth() const{
+    return health;
+}
+void Transformer::setHealth(unsigned health){
+    this->health = health;
+}
+
+
+
+const unsigned& Transformer::getLevel() const{
+    return level;
+}
+void Transformer::setLevel(unsigned level){
+    this->level = level;
+}
+
+
+
+const unsigned& Transformer::getStrength() const{
+    return strength;
+}
+void Transformer::setStrength(unsigned strength){
+    this->strength = strength;
+}
+
+
+
+const unsigned& Transformer::getPerception() const{
+    return perception;
+}
+void Transformer::setPerception(unsigned perception){
+    this->perception = perception;
+}
+
+
+const Weapon& Transformer::getWeapon() const{
+    return weapon;
+}
+void Transformer::setWeapon(const Weapon& weapon){
+    this->weapon = weapon;
+}
+
+
+
+const Vehicle* Transformer::getVehicle() const{
+    return vehicle;
+}
+void Transformer::assignVehicle(Vehicle* v){
+    vehicle = v;
+}
+
+
+
+
+
+
+
+
+void Transformer::transform() const{
+    std::cout<<"transform Transformer" << std::endl;
+}
+
+void Transformer::openFire() const{
+    std::cout<<"openFire Transformer" << std::endl;
 }
 
