@@ -1,4 +1,3 @@
-#include "head.h"
 #include <iostream>
 #include "Transformer.h"
 #include "OptimusPrime.h"
@@ -8,21 +7,19 @@
 
 int main() {
 
-    // Создаем объекты
+
     Transformer transformer;
     OptimusPrime optimusPrime;
     Megatron megatron;
     Weapon myWeapon;
     Bumblebee bumblebee;  
     
-    // Вывод информации о трансформерах
     std::cout << "Default transformer:" << std::endl;
     std::cout << "Level: " << transformer.getLevel() << std::endl;
     std::cout << "Strength: " << transformer.getStrength() << std::endl;
     std::cout << "Range: " << transformer.getRange() << std::endl;
     std::cout << "Fuel: " << transformer.getFuel() << std::endl;
     std::cout << "Ammo: " << transformer.getAmmo() << std::endl;
-    myWeapon.printInfo();
 
     std::cout << "\nOptimus Prime:" << std::endl;
     std::cout << "Level: " << optimusPrime.getLevel() << std::endl;
@@ -31,7 +28,6 @@ int main() {
     std::cout << "Fuel: " << optimusPrime.getFuel() << std::endl;
     std::cout << "Ammo: " << optimusPrime.getAmmo() << std::endl;
     std::cout << "Truck Speed: " << optimusPrime.getTruckSpeed() << std::endl;
-    myWeapon.printInfo();
 
     std::cout << "\nBumblebee:" << std::endl;
     std::cout << "Level: " << bumblebee.getLevel() << std::endl;
@@ -40,7 +36,6 @@ int main() {
     std::cout << "Fuel: " << bumblebee.getFuel() << std::endl;
     std::cout << "Ammo: " << bumblebee.getAmmo() << std::endl;
     std::cout << "Camaro Speed: " << bumblebee.getCamaroSpeed() << std::endl;
-    myWeapon.printInfo();
 
     std::cout << "\nMegatron:" << std::endl;
     std::cout << "Level: " << megatron.getLevel() << std::endl;
@@ -48,7 +43,6 @@ int main() {
     std::cout << "Range: " << megatron.getRange() << std::endl;
     std::cout << "Fuel: " << megatron.getFuel() << std::endl;
     std::cout << "Ammo: " << megatron.getAmmo() << std::endl;
-    myWeapon.printInfo();
 
     return 0;
 }

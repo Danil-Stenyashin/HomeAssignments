@@ -1,8 +1,7 @@
 #include "Weapon.h"
-#include <iostream> 
+#include <iostream>
 
-void Weapon::printInfo() const {
-    std::cout << "Type: " << type << std::endl;
-    std::cout << "Damage: " << damage << std::endl;
+std::ostream& operator<<(std::ostream& os, const Weapon& w) {
+    os << "Type: " << w.getType() << ", Damage: " << w.getDamage();
+    return os;
 }
-

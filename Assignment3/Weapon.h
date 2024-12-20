@@ -2,6 +2,7 @@
 #define WEAPON_H
 
 #include <string>
+#include <iostream>
 
 class Weapon {
 protected:
@@ -18,8 +19,12 @@ public:
 
     void setType(const std::string& type) { this->type = type; }
     void setDamage(int damage) { this->damage = damage; }
+    
+    std::string getType() {return type;}
+    int getDamage() {return damage;}
 
-    void printInfo() const;
+    
+    friend std::ostream& operator<<(std::ostream& os, const Weapon& w);
 };
    
 #endif // WEAPON_H
