@@ -1,41 +1,30 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include <iostream>
 #include <string>
+#include <iostream>
 
 class Weapon {
-private:
+protected:
     std::string type;
     int damage;
 
 public:
-    // Конструкторы
-    Weapon(std::string t = "Default Weapon", int d = 10) : type(t), damage(d) {}
+       
+    Weapon() : type("AK-47"), damage(40) {}
+    Weapon(const std::string& type, int damage) : type(type), damage(damage) {}
 
-    // Геттеры
-    std::string getType() const { return type; }
-    int getDamage() const { return damage; }
+    const std::string& getType() const { return type; }
+    const int& getDamage() const { return damage; }
 
-    // Перегрузка оператора << для вывода в поток
-    friend std::ostream& operator<<(std::ostream& os, const Weapon& w) {
-        os << "Weapon: " << w.type << ", Damage: " << w.damage;
-        return os;
-    }
+    void setType(const std::string& type) { this->type = type; }
+    void setDamage(int damage) { this->damage = damage; }
+    
+    std::string getType() {return type;}
+    int getDamage() {return damage;}
 
-    // Перегрузка операторов сравнения
-    bool operator<(const Weapon& w) const {
-        return this->damage < w.damage;
-    }
-
-    bool operator>(const Weapon& w) const {
-        return this->damage > w.damage;
-    }
-
-    bool operator==(const Weapon& w) const {
-        return this->damage == w.damage;
-    }
+    
+    friend std::ostream& operator<<(std::ostream& os, const Weapon& w);
 };
-
+   
 #endif // WEAPON_H
-
