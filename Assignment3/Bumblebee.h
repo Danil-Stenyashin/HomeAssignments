@@ -1,5 +1,5 @@
 #ifndef BUMBLEBEE_H
-#define BUMBLEBEE_H
+#define BUMBLEBEE_H 
 
 #include <string>
 #include "Transformer.h"
@@ -17,7 +17,6 @@ public:
 private:
     unsigned int _camaroSpeed;
     std::string _camaroColor;
-    unsigned int _intelligenceLevel;
 };
 
 #endif
