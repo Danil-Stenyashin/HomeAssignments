@@ -1,57 +1,54 @@
-#include "head.h"
-
 #include <iostream>
+#include <vector>
 #include "Transformer.h"
-#include "OptimusPrime.h"
-#include "Bumblebee.h"
-#include "Megatron.h"
-#include <gtest/gtest.h>
+#include "Autobot.h"
+#include "Decepticon.h"
 
 
 int main() {
-
+    std::cout << "Direct method calls:" << std::endl;
     Transformer transformer;
-    OptimusPrime optimusPrime;
-    Megatron megatron;
-    Weapon myWeapon;
-    Bumblebee bumblebee;  
+    transformer.transform();
+    transformer.openFire();
+    transformer.ulta();
     
+    Autobot autobot;
+    autobot.transform();
+    autobot.openFire();
+    autobot.ulta();
+
+    Decepticon decepticon;
+    decepticon.transform();
+    decepticon.openFire();
+    decepticon.ulta();
+
+
+
+    std::cout << "\nMethod calls through base class pointers:" << std::endl;
+    Transformer* t1 = &autobot;
+    Transformer* t2 = &decepticon;
+
+    t1->transform();
+    t2->openFire();
+
+    std::cout << "\nVirtual method calls through a vector:" << std::endl;
     
-
-    std::cout << "Default transformer:" << std::endl;
-    std::cout << "Level: " << transformer.getLevel() << std::endl;
-    std::cout << "Strength: " << transformer.getStrength() << std::endl;
-    std::cout << "Range: " << transformer.getRange() << std::endl;
-    std::cout << "Fuel: " << transformer.getFuel() << std::endl;
-    std::cout << "Ammo: " << transformer.getAmmo() << std::endl;
-    myWeapon.printInfo();
-
-    std::cout << "\nOptimus Prime:" << std::endl;
-    std::cout << "Level: " << optimusPrime.getLevel() << std::endl;
-    std::cout << "Strength: " << optimusPrime.getStrength() << std::endl;
-    std::cout << "Range: " << optimusPrime.getRange() << std::endl;
-    std::cout << "Fuel: " << optimusPrime.getFuel() << std::endl;
-    std::cout << "Ammo: " << optimusPrime.getAmmo() << std::endl;
-    std::cout << "Truck Speed: " << optimusPrime.getTruckSpeed() << std::endl;
-    myWeapon.printInfo();
-
-    std::cout << "\nBumblebee:" << std::endl;
-    std::cout << "Level: " << bumblebee.getLevel() << std::endl;
-    std::cout << "Strength: " << bumblebee.getStrength() << std::endl;
-    std::cout << "Range: " << bumblebee.getRange() << std::endl;
-    std::cout << "Fuel: " << bumblebee.getFuel() << std::endl;
-    std::cout << "Ammo: " << bumblebee.getAmmo() << std::endl;
-    std::cout << "Camaro Speed: " << bumblebee.getCamaroSpeed() << std::endl;
-    myWeapon.printInfo();
-
-    std::cout << "\nMegatron:" << std::endl;
-    std::cout << "Level: " << megatron.getLevel() << std::endl;
-    std::cout << "Strength: " << megatron.getStrength() << std::endl;
-    std::cout << "Range: " << megatron.getRange() << std::endl;
-    std::cout << "Fuel: " << megatron.getFuel() << std::endl;
-    std::cout << "Ammo: " << megatron.getAmmo() << std::endl;
-    myWeapon.printInfo();
+    std::vector<Transformer*> transformers;
+    for (int i = 0; i < 3; ++i) {
+        transformers.push_back(new Transformer());
+        transformers.push_back(new Autobot());
+        transformers.push_back(new Decepticon());
+    }
+    
+    for (Transformer* transformer : transformers) {
+        transformer->transform();
+        transformer->openFire();
+        transformer->ulta();
+    }
+    
+    for (Transformer* transformer : transformers) {
+        delete transformer;
+    }
 
     return 0;
 }
-  

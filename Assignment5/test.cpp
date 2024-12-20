@@ -1,55 +1,194 @@
-#include <iostream>
+#include <gtest/gtest.h>
 #include <vector>
+#include <string>
 #include "Transformer.h"
 #include "Autobot.h"
 #include "Decepticon.h"
+#include "Weapon.h"
+#include "Vehicle.h"
 
-int main() {
-    // Явное тестирование методов
-    Autobot autobot;
+
+TEST(DirectMethodCalls, Decepticon)
+{
     Decepticon decepticon;
+    std::string output;
 
-    std::cout << "Testing individual objects:" << std::endl;
-    autobot.transform();
-    autobot.openFire();
-    autobot.ultimate();
-
+    testing::internal::CaptureStdout();
     decepticon.transform();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "transform Decepticon\n");
+
+    testing::internal::CaptureStdout();
     decepticon.openFire();
-    decepticon.ultimate();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "openFire Decepticon\n");
 
-    // Тестирование вызова методов из указателя базового класса
-    Transformer* transformerPtr = &autobot;
-    std::cout << "\nTesting methods through base class pointer:" << std::endl;
-    transformerPtr->transform();
-    transformerPtr->openFire();
-    transformerPtr->ultimate();
-
-    transformerPtr = &decepticon;
-    transformerPtr->transform();
-    transformerPtr->openFire();
-    transformerPtr->ultimate();
-
-    // Создание вектора указателей и вызов методов в цикле
-    std::vector<Transformer*> transformers;
-    for (int i = 0; i < 3; ++i) {
-        transformers.push_back(new Autobot());
-        transformers.push_back(new Decepticon());
-        transformers.push_back(new Transformer());
-    }
-
-    std::cout << "\nTesting methods in a vector of pointers:" << std::endl;
-    for (const auto& t : transformers) {
-        t->transform();
-        t->openFire();
-        t->ultimate();
-    }
-
-    // Очистка памяти
-    for (auto& t : transformers) {
-        delete t;
-    }
-
-    return 0;
+    testing::internal::CaptureStdout();
+    decepticon.ulta();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "ulta Decepticon\n");
 }
 
+TEST(DirectMethodCalls, Transformer)
+{
+    Transformer transformer;
+    std::string output;
+
+    testing::internal::CaptureStdout();
+    transformer.transform();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "transform Transformer\n");
+
+    testing::internal::CaptureStdout();
+    transformer.openFire();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "openFire Transformer\n");
+
+    testing::internal::CaptureStdout();
+    transformer.ulta();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Executing ulta for Transformer: Unknown\n");
+}
+
+
+TEST(DirectMethodCalls, Autobot)
+{
+    Autobot autobot;
+    std::string output;
+
+    testing::internal::CaptureStdout();
+    autobot.transform();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "transform Autobot\n");
+
+    testing::internal::CaptureStdout();
+    autobot.openFire();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "openFire Autobot\n");
+
+    testing::internal::CaptureStdout();
+    autobot.ulta();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "ulta Autobot\n");
+}
+
+
+TEST(MethodCallsThroughBaseClassPointers, Autobot)
+{
+    Autobot autobot;
+    std::string output;
+
+    Transformer* t1 = &autobot;
+
+    testing::internal::CaptureStdout();
+    t1->transform();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "transform Autobot\n");
+
+    testing::internal::CaptureStdout();
+    t1->openFire();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "openFire Autobot\n");
+
+    testing::internal::CaptureStdout();
+    t1->ulta();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output,  "ulta Autobot\n");
+}
+
+TEST(MethodCallsThroughBaseClassPointers, Decepticon)
+{
+    Decepticon decepticon;
+    std::string output;
+
+    Transformer* t2 = &decepticon;
+
+    testing::internal::CaptureStdout();
+    t2->transform();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "transform Decepticon\n");
+
+    testing::internal::CaptureStdout();
+    t2->openFire();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "openFire Decepticon\n");
+
+    testing::internal::CaptureStdout();
+    t2->ulta();
+    output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "ulta Decepticon\n");
+}
+
+TEST(VirtualMethodCallsThroughVector, null)
+{
+    std::vector<Transformer*> transformers;
+    std::string output;
+    for (int i = 0; i < 3; ++i)
+    {
+        transformers.push_back(new Transformer());
+        transformers.push_back(new Autobot());
+        transformers.push_back(new Decepticon());
+    }
+
+
+    for (Transformer* transformer : transformers)
+    {
+        if (dynamic_cast<Autobot*>(transformer))
+        {
+            testing::internal::CaptureStdout();
+            transformer->transform();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "transform Autobot\n");
+
+            testing::internal::CaptureStdout();
+            transformer->openFire();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "openFire Autobot\n");
+
+            testing::internal::CaptureStdout();
+            transformer->ulta();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "ulta Autobot\n");
+        }
+        else if (dynamic_cast<Decepticon*>(transformer))
+        {
+            testing::internal::CaptureStdout();
+            transformer->transform();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "transform Decepticon\n");
+
+            testing::internal::CaptureStdout();
+            transformer->openFire();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "openFire Decepticon\n");
+
+            testing::internal::CaptureStdout();
+            transformer->ulta();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "ulta Decepticon\n");
+        }
+        else
+        {
+            testing::internal::CaptureStdout();
+            transformer->transform();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "transform Transformer\n");
+
+            testing::internal::CaptureStdout();
+            transformer->openFire();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "openFire Transformer\n");
+
+            testing::internal::CaptureStdout();
+            transformer->ulta();
+            output = testing::internal::GetCapturedStdout();
+            EXPECT_EQ(output, "Executing ulta for Transformer: Unknown\n");
+        }
+    }
+
+
+    for (Transformer* transformer : transformers)
+    {
+        delete transformer;
+    }
+}
