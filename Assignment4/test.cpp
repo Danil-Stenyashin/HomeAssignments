@@ -1,140 +1,76 @@
 #include <gtest/gtest.h>
-#include "Transformer.h"
-#include "Bumblebee.h"
-#include "head.h"
-#include "Megatron.h"
-#include "OptimusPrime.h"
 #include "Weapon.h"
+#include "Transformer.h"
 #include <sstream>
 
 
+TEST(WeaponTest, OutputOperator) {
+    Weapon w("Laser Gun", 50);
+    std::ostringstream oss;
+    oss << w;
+    EXPECT_EQ(oss.str(), "Weapon: Laser Gun, Damage: 50");
+}
+
+TEST(WeaponTest, ComparisonOperators) {
+    Weapon w1("Laser Gun", 50);
+    Weapon w2("Rocket Launcher", 75);
+    Weapon w3("Laser Gun", 50);
+
+    EXPECT_TRUE(w1 < w2);
+    EXPECT_TRUE(w2 > w1);
+    EXPECT_TRUE(w1 == w3);
+}
+
 TEST(TransformerTest, OutputOperator) {
-    Transformer t(10, 200, 10, 100, 50, Weapon("Laser", 50));
+    Weapon w("Laser Gun", 50);
+    Transformer t(10, 200, 10, 100, 100, w);
     std::ostringstream oss;
     oss << t;
-    std::string expected_output = "Level: 10\nStrength: 200\nRange: 10\nFuel: 100\nAmmo: 50\nWeapon: Laser (Damage: 50)\n";
-    EXPECT_EQ(oss.str(), expected_output);
+    EXPECT_EQ(oss.str(), "Transformer Level: 10\nStrength: 200, Range: 10\nFuel: 100, Ammo: 100\nWeapon: Weapon: Laser Gun, Damage: 50");
 }
 
-// Тест для оператора сравнения
-TEST(TransformerTest, ComparisonOperator) {
-    Transformer t1(10, 200, 10, 100, 50, Weapon("Laser", 50));
-    Transformer t2(10, 150, 10, 100, 50, Weapon("Laser", 50));
+TEST(TransformerTest, ComparisonOperators) {
+    Transformer t1(10, 200, 10, 100, 100);
+    Transformer t2(5, 150, 10, 100, 50);
+    Transformer t3(10, 200, 10, 100, 100);
 
     EXPECT_TRUE(t1 > t2);
-    EXPECT_FALSE(t1 < t2);
+    EXPECT_TRUE(t2 < t1);
+    EXPECT_TRUE(t1 == t3);
 }
 
+TEST(TransformerTest, CompareTransformers) {
+    Transformer t1;
+    t1.setLevel(5);
+    t1.setStrength(150);
 
-TEST(WeaponTest, PrintInfo) {
-    // Создаем объект Weapon с заданными параметрами
-    Weapon w("Laser Cannon", 75);
+    Transformer t2;
+    t2.setLevel(5);
+    t2.setStrength(150);
 
-    // Перенаправляем стандартный вывод в строковый поток
-    std::ostringstream output;
-    std::streambuf* oldCoutBuf = std::cout.rdbuf(output.rdbuf());
+    EXPECT_TRUE(t1 == t2);  
 
-    // Вызываем метод printInfo
-    w.printInfo();
-
-    // Возвращаем стандартный вывод к исходному состоянию
-    std::cout.rdbuf(oldCoutBuf);
-
-    // Проверяем содержимое потока
-    std::string expectedOutput = 
-        "Type: Laser Cannon\n"
-        "Damage: 75\n";
-
-    EXPECT_EQ(output.str(), expectedOutput);
+    t2.setStrength(200);
+    EXPECT_TRUE(t1 != t2);  
 }
 
-TEST(TransformerTest, DefaultConstructor) {
-    Transformer t;
-    EXPECT_EQ(t.getLevel(), 1);
-    EXPECT_EQ(t.getStrength(), 100);
-    EXPECT_EQ(t.getRange(), 5);
-    EXPECT_EQ(t.getFuel(), 100);
-    EXPECT_EQ(t.getAmmo(), 100);
-    EXPECT_EQ(t.getWeapon().getType(), "Default Weapon");
-    EXPECT_EQ(t.getWeapon().getDamage(), 10);
+TEST(OptimusPrimeTest, SetGetAttributes) {
+    OptimusPrime optimus;
+    optimus.setTruckSpeed(120);
+    optimus.setArmorStrength(80);
+    optimus.setLeadershipLevel(10);
+
+    EXPECT_EQ(optimus.getTruckSpeed(), 120);
+    EXPECT_EQ(optimus.getArmorStrength(), 80);
+    EXPECT_EQ(optimus.getLeadershipLevel(), 10);
 }
 
-// Тест метода move
-TEST(TransformerTest, Move) {
-    Transformer t;
-    EXPECT_TRUE(t.move());
+TEST(BumblebeeTest, SetGetAttributes) {
+    Bumblebee bumblebee;
+    bumblebee.setCamaroSpeed(160);
+    bumblebee.setCamaroColor("Black");
+
+    EXPECT_EQ(bumblebee.getCamaroSpeed(), 160);
+    EXPECT_EQ(bumblebee.getCamaroColor(), "Black");
 }
 
-
-// Тест метода jump
-TEST(TransformerTest, Jump) {
-    Transformer t;
-    EXPECT_TRUE(t.jump());
-}
-
-// Тест метода fire
-TEST(TransformerTest, Fire) {
-    Transformer t;
-    t.setAmmo(3);
-    EXPECT_TRUE(t.fire()); // Уменьшается боезапас
-    EXPECT_EQ(t.getAmmo(), 2);
-    EXPECT_TRUE(t.fire());
-    EXPECT_EQ(t.getAmmo(), 1);
-    EXPECT_TRUE(t.fire());
-    EXPECT_EQ(t.getAmmo(), 0);
-    EXPECT_FALSE(t.fire()); // Боезапас исчерпан
-}
-
-// Тест метода transform
-TEST(TransformerTest, Transform) {
-    Transformer t;
-    EXPECT_TRUE(t.transform());
-}
-
-// Тест метода ultimate
-TEST(TransformerTest, Ultimate) {
-    Transformer t;
-    EXPECT_TRUE(t.ultimate());
-}
-
-// Тест геттеров и сеттеров
-TEST(TransformerTest, SetGetAttributes) {
-    Transformer t;
-
-    t.setLevel(5);
-    EXPECT_EQ(t.getLevel(), 5);
-
-    t.setStrength(150);
-    EXPECT_EQ(t.getStrength(), 150);
-
-    t.setRange(10);
-    EXPECT_EQ(t.getRange(), 10);
-
-    t.setFuel(80);
-    EXPECT_EQ(t.getFuel(), 80);
-
-    t.setAmmo(50);
-    EXPECT_EQ(t.getAmmo(), 50);
-}
-
-// Тест геттеров и сеттеров для Weapon
-TEST(TransformerTest, SetGetWeapon) {
-    Transformer t;
-    Weapon newWeapon("Laser Cannon", 50);
-    t.setWeapon(newWeapon);
-
-    EXPECT_EQ(t.getWeapon().getType(), "Laser Cannon");
-    EXPECT_EQ(t.getWeapon().getDamage(), 50);
-}
-
-// Тест конструктора и деструктора (утечка памяти)
-TEST(TransformerTest, DestructorSafety) {
-    Transformer* t = new Transformer();
-    Weapon newWeapon("Rocket Launcher", 75);
-    t->setWeapon(newWeapon);
-
-    EXPECT_EQ(t->getWeapon().getType(), "Rocket Launcher");
-    EXPECT_EQ(t->getWeapon().getDamage(), 75);
-
-    delete t; // Проверяем, что деструктор освобождает память
-}

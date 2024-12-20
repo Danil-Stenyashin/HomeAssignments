@@ -1,43 +1,44 @@
-# Переменные
-CXX = g++
-CXXFLAGS = -Werror -Wpedantic -Wall -std=c++17  # Убедитесь, что используете стандарт C++17 или выше
-SRC = main.cpp Transformer.cpp OptimusPrime.cpp Bumblebee.cpp Megatron.cpp Weapon.cpp
-OBJ = $(SRC:.cpp=.o)
-EXEC = main
 
-# Добавим файлы для тестов
-TEST_SRC = test.cpp
-TEST_OBJ = $(TEST_SRC:.cpp=.o)
-TEST_EXEC = test_exec  # Уникальное имя для исполнимого файла тестов
+CXX = g++                   
+CXXFLAGS = -std=c++14 -Wall -Werror -Wpedantic -I$(GTEST_DIR)/include -pthread 
+TARGET = main         
+TEST_TARGET = test           
 
-# Правило по умолчанию
-all: $(EXEC)
 
-# Линкование исполнимого файла
-$(EXEC): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
+SRCS = main.cpp Transformer.cpp OptimusPrime.cpp Bumblebee.cpp Megatron.cpp Weapon.cpp
+TEST_SRCS = test.cpp Transformer.cpp Weapon.cpp Bumblebee.cpp OptimusPrime.cpp Megatron.cpp
 
-# Линкование исполнимого файла для тестов
-$(TEST_EXEC): $(OBJ) $(TEST_OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) $(TEST_OBJ) -o $(TEST_EXEC) -lgtest -lgtest_main -pthread
+OBJS = $(SRCS:.cpp=.o)        
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)  
 
-# Компиляция исходных файлов
+
+GTEST_DIR = /path/to/gtest
+
+
+all: $(TARGET)
+
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
+
+
+test: $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS) $(TEST_OBJS) -lgtest -lgtest_main -pthread -o $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Очистка промежуточных файлов
-clean:
-	rm -f $(OBJ) $(EXEC) $(TEST_OBJ) $(TEST_EXEC)
 
-# Прочие полезные команды
-run: $(EXEC)
-	./$(EXEC)
-
-# Команда для запуска тестов
-run_tests: $(TEST_EXEC)
-	./$(TEST_EXEC)
-
-# Форматирование исходников
 format:
-	astyle --style=allman *.cpp *.h
+	@echo "Formatting source files with astyle..."
+	astyle --style=allman --indent=tab $(SRCS) $(TEST_SRCS)
+
+
+clean:
+	rm -f $(OBJS) $(TEST_OBJS) $(TARGET) $(TEST_TARGET)
+
+	
+.PHONY: all test clean format
 

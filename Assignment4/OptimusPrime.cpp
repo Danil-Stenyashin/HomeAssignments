@@ -1,22 +1,37 @@
+
 #include "OptimusPrime.h"
-#include <iostream>  // Для оператора <<
 
-OptimusPrime::OptimusPrime() : _truckSpeed(100) {}
+OptimusPrime::OptimusPrime() : _truckSpeed(0), _armorStrength(0), _leadershipLevel(0) {}
 
-OptimusPrime::OptimusPrime(unsigned int level, unsigned int strength, unsigned int range, unsigned int fuel, unsigned int ammo, unsigned int truckSpeed)
-    : Transformer(level, strength, range, fuel, ammo, Weapon("Truck Weapon", 30)), _truckSpeed(truckSpeed) {}
+bool OptimusPrime::transformToTruck() {
+    return true;
+}
 
-bool OptimusPrime::transformToTruck() { return true; }
+bool OptimusPrime::transformToRobot() {
+    return true;
+}
 
-bool OptimusPrime::transformToRobot() { return true; }
+unsigned int OptimusPrime::getTruckSpeed() const {
+    return _truckSpeed;
+}
 
-unsigned int OptimusPrime::getTruckSpeed() const { return _truckSpeed; }
+void OptimusPrime::setTruckSpeed(unsigned int speed) {
+    _truckSpeed = speed;
+}
 
-void OptimusPrime::setTruckSpeed(unsigned int speed) { _truckSpeed = speed; }
+unsigned int OptimusPrime::getArmorStrength() const {
+    return _armorStrength;
+}
 
-std::ostream& operator<<(std::ostream& os, const OptimusPrime& op) {
-    os << static_cast<const Transformer&>(op);  // Выводим общие данные
-    os << "Truck Speed: " << op.getTruckSpeed() << "\n";
-    return os;
+void OptimusPrime::setArmorStrength(unsigned int strength) {
+    _armorStrength = strength;
+}
+
+unsigned int OptimusPrime::getLeadershipLevel() const {
+    return _leadershipLevel;
+}
+
+void OptimusPrime::setLeadershipLevel(unsigned int level) {
+    _leadershipLevel = level;
 }
 

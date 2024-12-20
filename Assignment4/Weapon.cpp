@@ -1,10 +1,4 @@
-#include "Weapon.h"
-#include <iostream> 
-   
+#include "Transformer.h"
 
-void Weapon::printInfo() const {
-     std::cout << "Type: " << type << std::endl;
-     std::cout << "Damage: " << damage << std::endl;
-}
-   
+
 

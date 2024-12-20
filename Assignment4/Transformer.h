@@ -1,9 +1,9 @@
+// Transformer.h
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
 #include <string>
 #include "Weapon.h"
-#include <ostream>  // Для оператора <<
 
 enum class Direction {
     Left,
@@ -15,8 +15,7 @@ enum class Direction {
 class Transformer {
 public:
     Transformer();
-    Transformer(unsigned int level, unsigned int strength, unsigned int range, unsigned int fuel, unsigned int ammo, const Weapon& weapon);  // Перегрузка конструктора
-    ~Transformer();
+    virtual ~Transformer() = default;
 
     bool move();
     bool turn(Direction dir);
@@ -39,16 +38,18 @@ public:
 
     unsigned int getAmmo() const;
     void setAmmo(unsigned int ammo);
+	
+    const Weapon& getWeapon() const; 
+    void setWeapon(const Weapon& weapon); 
 
-    const Weapon& getWeapon() const;
-    void setWeapon(const Weapon& weapon);
+    const Weapon& getPrimaryWeapon() const;
+    void setPrimaryWeapon(const Weapon& weapon);
 
-    // Операторы сравнения
-    bool operator>(const Transformer& other) const;
-    bool operator<(const Transformer& other) const;
+    const Weapon& getSecondaryWeapon() const;
+    void setSecondaryWeapon(const Weapon& weapon);
 
-    // Перегрузка оператора вывода
-    friend std::ostream& operator<<(std::ostream& os, const Transformer& t);
+    bool operator==(const Transformer& other) const;
+    bool operator!=(const Transformer& other) const;
 
 private:
     unsigned int _level;
@@ -57,7 +58,9 @@ private:
     unsigned int _fuel;
     unsigned int _ammo;
 
-    Weapon* _weapon;
+    Weapon* _weapon;  
+    Weapon _primaryWeapon;
+    Weapon _secondaryWeapon;
 };
 
 #endif
