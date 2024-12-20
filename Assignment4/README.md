@@ -32,7 +32,7 @@
 # After launcing the program you can see the settings of the transformers
 
 # If you want to test this programm
-3) Use command: 	        *make run_tests*
+1) Use command: 	        *make run_tests*
    
 
 For correct close write "make clean" in console
