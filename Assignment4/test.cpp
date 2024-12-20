@@ -1,76 +1,249 @@
 #include <gtest/gtest.h>
 #include "Weapon.h"
+#include "Vehicle.h"
 #include "Transformer.h"
+#include "Megatron.h"
+#include "Bumblebee.h"
+#include "OptimusPrime.h"
 #include <sstream>
 
 
-TEST(WeaponTest, OutputOperator) {
-    Weapon w("Laser Gun", 50);
-    std::ostringstream oss;
-    oss << w;
-    EXPECT_EQ(oss.str(), "Weapon: Laser Gun, Damage: 50");
+TEST(TransformerTest, DefaultConstructor) {
+    Transformer t;
+    EXPECT_EQ(t.getLevel(), 1);
+    EXPECT_EQ(t.getStrength(), 100);
+    EXPECT_EQ(t.getRange(), 5);
+    EXPECT_EQ(t.getFuel(), 100);
+    EXPECT_EQ(t.getAmmo(), 100);
+    EXPECT_EQ(t.getWeapon().getType(), "Default Weapon");
+    EXPECT_EQ(t.getWeapon().getDamage(), 10);
 }
 
-TEST(WeaponTest, ComparisonOperators) {
-    Weapon w1("Laser Gun", 50);
-    Weapon w2("Rocket Launcher", 75);
-    Weapon w3("Laser Gun", 50);
 
-    EXPECT_TRUE(w1 < w2);
-    EXPECT_TRUE(w2 > w1);
-    EXPECT_TRUE(w1 == w3);
+TEST(TransformerTest, ParameterizedConstructorTest) {
+    Weapon customWeapon{"Plasma Gun", 80};
+    Transformer customTransformer(2, 150, 10, 80, 50, customWeapon);
+
+    EXPECT_EQ(customTransformer.getLevel(), 2);
+    EXPECT_EQ(customTransformer.getStrength(), 150);
+    EXPECT_EQ(customTransformer.getRange(), 10);
+    EXPECT_EQ(customTransformer.getFuel(), 80);
+    EXPECT_EQ(customTransformer.getAmmo(), 50);
+    EXPECT_EQ(customTransformer.getWeapon().getType(), "Plasma Gun");
 }
 
-TEST(TransformerTest, OutputOperator) {
-    Weapon w("Laser Gun", 50);
-    Transformer t(10, 200, 10, 100, 100, w);
-    std::ostringstream oss;
-    oss << t;
-    EXPECT_EQ(oss.str(), "Transformer Level: 10\nStrength: 200, Range: 10\nFuel: 100, Ammo: 100\nWeapon: Weapon: Laser Gun, Damage: 50");
+
+TEST(TransformerTest, GreaterThanOperatorTest) {
+    Weapon customWeapon{"Plasma Gun", 80};
+    Transformer other(2, 1000, 5, 100, 100, customWeapon);
+    Transformer transformer(2, 150, 5, 100, 100, customWeapon); 
+    EXPECT_TRUE(other > transformer);  
 }
 
-TEST(TransformerTest, ComparisonOperators) {
-    Transformer t1(10, 200, 10, 100, 100);
-    Transformer t2(5, 150, 10, 100, 50);
-    Transformer t3(10, 200, 10, 100, 100);
 
-    EXPECT_TRUE(t1 > t2);
-    EXPECT_TRUE(t2 < t1);
-    EXPECT_TRUE(t1 == t3);
+TEST(TransformerTest, LessThanOperatorTest) {
+    Weapon customWeapon{"Plasma Gun", 80};
+    Transformer other(2, 1000, 5, 100, 100, customWeapon);
+    Transformer transformer(2, 150, 5, 100, 100, customWeapon); 
+    EXPECT_TRUE(transformer < other); 
 }
 
-TEST(TransformerTest, CompareTransformers) {
-    Transformer t1;
-    t1.setLevel(5);
-    t1.setStrength(150);
+TEST(OptimusPrimeTest, OutputOperator) {
+    Weapon weapon("Plasma Cannon", 100);
+    OptimusPrime optimusPrime(120, 80, 10); 
 
-    Transformer t2;
-    t2.setLevel(5);
-    t2.setStrength(150);
 
-    EXPECT_TRUE(t1 == t2);  
+    optimusPrime.setLevel(5);
+    optimusPrime.setStrength(200);
+    optimusPrime.setRange(10);
+    optimusPrime.setFuel(100);
+    optimusPrime.setAmmo(50);
+    optimusPrime.setWeapon(weapon);
 
-    t2.setStrength(200);
-    EXPECT_TRUE(t1 != t2);  
+
+    std::ostringstream output;
+    output << optimusPrime;
+
+
+    std::string expected_output =
+        "OptimusPrime: level: 5\nstrength: 200\nrange: 10\nfuel: 100\nammo: 50\nweapon: Type: Plasma Cannon, Damage: 100\nTruck Speed: 120\nArmor Strength: 80\nLeadership Level: 10\n";
+
+
+    EXPECT_EQ(output.str(), expected_output);
 }
 
-TEST(OptimusPrimeTest, SetGetAttributes) {
-    OptimusPrime optimus;
-    optimus.setTruckSpeed(120);
-    optimus.setArmorStrength(80);
-    optimus.setLeadershipLevel(10);
-
-    EXPECT_EQ(optimus.getTruckSpeed(), 120);
-    EXPECT_EQ(optimus.getArmorStrength(), 80);
-    EXPECT_EQ(optimus.getLeadershipLevel(), 10);
+TEST(TransformerTest, SetGetLevel) {
+    Transformer t;
+    t.setLevel(10);
+    EXPECT_EQ(t.getLevel(), 10);
 }
 
-TEST(BumblebeeTest, SetGetAttributes) {
-    Bumblebee bumblebee;
-    bumblebee.setCamaroSpeed(160);
-    bumblebee.setCamaroColor("Black");
 
-    EXPECT_EQ(bumblebee.getCamaroSpeed(), 160);
-    EXPECT_EQ(bumblebee.getCamaroColor(), "Black");
+TEST(TransformerTest, SetGetStrength) {
+    Transformer t;
+    t.setStrength(200);
+    EXPECT_EQ(t.getStrength(), 200);
 }
 
+
+TEST(TransformerTest, SetGetRange) {
+    Transformer t;
+    t.setRange(20);
+    EXPECT_EQ(t.getRange(), 20);
+}
+
+TEST(TransformerTest, SetGetFuel) {
+    Transformer t;
+    t.setFuel(50);
+    EXPECT_EQ(t.getFuel(), 50);
+}
+
+
+TEST(TransformerTest, SetGetAmmo) {
+    Transformer t;
+    t.setAmmo(30);
+    EXPECT_EQ(t.getAmmo(), 30);
+}
+
+
+TEST(TransformerTest, SetGetWeapon) {
+    Transformer t;
+    Weapon newWeapon("Laser Cannon", 75);
+    t.setWeapon(newWeapon);
+
+    EXPECT_EQ(t.getWeapon().getType(), "Laser Cannon");
+    EXPECT_EQ(t.getWeapon().getDamage(), 75);
+}
+
+
+TEST(TransformerTest, AssignVehicle) {
+    Transformer t;
+    Vehicle vehicle("Camaro", 200);
+    t.assignVehicle(&vehicle);
+
+    EXPECT_EQ(t.getVehicle()->getName(), "Camaro");
+    EXPECT_EQ(t.getVehicle()->getSpeed(), 200);
+}
+
+
+TEST(TransformerTest, Move) {
+    Transformer t;
+    EXPECT_TRUE(t.move());
+}
+
+
+TEST(TransformerTest, Jump) {
+    Transformer t;
+    EXPECT_TRUE(t.jump());
+}
+
+
+
+TEST(MegatronTest, Constructor) {
+    Megatron m;
+    EXPECT_EQ(m.getLevel(), 1); 
+    EXPECT_EQ(m.getStrength(), 100);  
+    EXPECT_EQ(m.getRange(), 5);  
+    EXPECT_EQ(m.getFuel(), 100);  
+    EXPECT_EQ(m.getAmmo(), 100);  
+    EXPECT_EQ(m.getDestructionPower(), 300); 
+    EXPECT_EQ(m.getTankArmor(), 250); 
+}
+
+
+TEST(MegatronTest, TransformToTank) {
+    Megatron m;
+    EXPECT_TRUE(m.transformToTank()); 
+}
+
+
+TEST(MegatronTest, TransformToRobot) {
+    Megatron m;
+    EXPECT_TRUE(m.transformToRobot());  
+}
+
+
+TEST(MegatronTest, SetGetDestructionPower) {
+    Megatron m;
+    m.setDestructionPower(500);
+    EXPECT_EQ(m.getDestructionPower(), 500);
+}
+
+
+TEST(MegatronTest, SetGetTankArmor) {
+    Megatron m;
+    m.setTankArmor(200);
+    EXPECT_EQ(m.getTankArmor(), 200);
+}
+
+
+TEST(BumblebeeTest, Constructor) {
+    Bumblebee b;
+    EXPECT_EQ(b.getLevel(), 1);  
+    EXPECT_EQ(b.getStrength(), 100); 
+    EXPECT_EQ(b.getRange(), 5);  
+    EXPECT_EQ(b.getFuel(), 100);  
+    EXPECT_EQ(b.getAmmo(), 100);  
+    EXPECT_EQ(b.getCamaroSpeed(), 150); 
+    EXPECT_EQ(b.getCamaroColor(), "Yellow");  
+}
+
+
+TEST(BumblebeeTest, SetGetCamaroSpeed) {
+    Bumblebee b;
+    b.setCamaroSpeed(200);
+    EXPECT_EQ(b.getCamaroSpeed(), 200);
+}
+
+
+TEST(BumblebeeTest, SetGetCamaroColor) {
+    Bumblebee b;
+    b.setCamaroColor("Red");
+    EXPECT_EQ(b.getCamaroColor(), "Red");
+}
+
+
+TEST(OptimusPrimeTest, Constructor) {
+    OptimusPrime op;
+    EXPECT_EQ(op.getLevel(), 1);  
+    EXPECT_EQ(op.getStrength(), 100);  
+    EXPECT_EQ(op.getRange(), 5);  
+    EXPECT_EQ(op.getFuel(), 100);  
+    EXPECT_EQ(op.getAmmo(), 100); 
+    EXPECT_EQ(op.getTruckSpeed(), 0);  
+    EXPECT_EQ(op.getArmorStrength(), 0);  
+    EXPECT_EQ(op.getLeadershipLevel(), 0);  
+}
+
+
+TEST(OptimusPrimeTest, SetGetTruckSpeed) {
+    OptimusPrime op;
+    op.setTruckSpeed(120);
+    EXPECT_EQ(op.getTruckSpeed(), 120);
+}
+
+
+TEST(OptimusPrimeTest, SetGetArmorStrength) {
+    OptimusPrime op;
+    op.setArmorStrength(250);
+    EXPECT_EQ(op.getArmorStrength(), 250);
+}
+
+
+TEST(OptimusPrimeTest, SetGetLeadershipLevel) {
+    OptimusPrime op;
+    op.setLeadershipLevel(15);
+    EXPECT_EQ(op.getLeadershipLevel(), 15);
+}
+
+
+TEST(OptimusPrimeTest, TransformToTruck) {
+    OptimusPrime op;
+    EXPECT_TRUE(op.transformToTruck()); 
+}
+
+
+TEST(OptimusPrimeTest, TransformToRobot) {
+    OptimusPrime op;
+    EXPECT_TRUE(op.transformToRobot());  
+}
