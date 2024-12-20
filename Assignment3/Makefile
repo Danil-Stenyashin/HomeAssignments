@@ -1,10 +1,10 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -I$(GTEST_DIR)/include -pthread
+CXXFLAGS = -std=c++14 -Wall -Werror -Wpedantic -I$(GTEST_DIR)/include -pthread
 TARGET = main
 TEST_TARGET = test
 
-SRCS = main.cpp Transformer.cpp OptimusPrime.cpp Bumblebee.cpp Megatron.cpp Weapon.cpp
-TEST_SRCS = test.cpp Transformer.cpp Weapon.cpp Bumblebee.cpp OptimusPrime.cpp Megatron.cpp
+SRCS = main.cpp Transformer.cpp OptimusPrime.cpp Bumblebee.cpp Megatron.cpp Weapon.cpp Vehicle.cpp
+TEST_SRCS = test.cpp Transformer.cpp Weapon.cpp Bumblebee.cpp OptimusPrime.cpp Megatron.cpp Vehicle.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
