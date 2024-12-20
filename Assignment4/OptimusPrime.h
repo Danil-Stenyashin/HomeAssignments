@@ -1,4 +1,3 @@
-
 #ifndef OPTIMUSPRIME_H
 #define OPTIMUSPRIME_H
 
@@ -6,10 +5,14 @@
 
 class OptimusPrime : public Transformer {
 public:
-    OptimusPrime();  
+    OptimusPrime(); 
+    
+    OptimusPrime(unsigned int truckSpeed, unsigned int armorStrength, unsigned int leadershipLevel);
+    
+    friend std::ostream& operator<<(std::ostream& os, const OptimusPrime& t);
 
     bool transformToTruck();  
-    bool transformToRobot(); 
+    bool transformToRobot();  
 
 
     unsigned int getTruckSpeed() const;

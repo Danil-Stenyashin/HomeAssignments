@@ -1,28 +1,36 @@
-// Transformer.h
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
 #include <string>
 #include "Weapon.h"
+#include "Vehicle.h"
 
-enum class Direction {
-    Left,
-    Right,
-    Forward,
-    Back
-};
 
 class Transformer {
+private:
+    unsigned int _level;
+    unsigned int _strength;
+    unsigned int _range;
+    unsigned int _fuel;
+    unsigned int _ammo;
+
+    Weapon _weapon;
+    Vehicle* _vehicle;
+    
 public:
     Transformer();
-    virtual ~Transformer() = default;
+    Transformer(unsigned int level, unsigned int strength,  unsigned int range, unsigned int fuel, unsigned int ammo, const Weapon& weapon);
+    
+    ~Transformer();
+    
+    friend std::ostream& operator<<(std::ostream& os, const Transformer& t);
+    
+    bool operator>(const Transformer& other) const;
+    
+    bool operator<(const Transformer& other) const;
 
     bool move();
-    bool turn(Direction dir);
     bool jump();
-    bool fire();
-    bool ultimate();
-    bool transform();
 
     unsigned int getLevel() const;
     void setLevel(unsigned int level);
@@ -38,30 +46,13 @@ public:
 
     unsigned int getAmmo() const;
     void setAmmo(unsigned int ammo);
-	
-    const Weapon& getWeapon() const; 
-    void setWeapon(const Weapon& weapon); 
 
-    const Weapon& getPrimaryWeapon() const;
-    void setPrimaryWeapon(const Weapon& weapon);
-
-    const Weapon& getSecondaryWeapon() const;
-    void setSecondaryWeapon(const Weapon& weapon);
-
-    bool operator==(const Transformer& other) const;
-    bool operator!=(const Transformer& other) const;
-
-private:
-    unsigned int _level;
-    unsigned int _strength;
-    unsigned int _range;
-    unsigned int _fuel;
-    unsigned int _ammo;
-
-    Weapon* _weapon;  
-    Weapon _primaryWeapon;
-    Weapon _secondaryWeapon;
+    const Weapon& getWeapon() const;
+    void setWeapon(const Weapon& weapon);
+    
+    const Vehicle* getVehicle() const;
+    void assignVehicle(Vehicle* v);
 };
 
-#endif
+#endif 
 

@@ -6,6 +6,9 @@
 class Megatron : public Transformer {
 public:
     Megatron();
+    Megatron(unsigned int power, unsigned int armor);
+    
+    friend std::ostream& operator<<(std::ostream& os, const Megatron& t);
 
     bool transformToTank();
     bool transformToRobot();
