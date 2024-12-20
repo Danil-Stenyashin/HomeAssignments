@@ -1,21 +1,40 @@
 #ifndef DECEPTICON_H
 #define DECEPTICON_H
 
+#include <string>
+#include <iostream>
 #include "Transformer.h"
 
-class Decepticon : public Transformer {
+
+class Decepticon : public Transformer
+{
+private:
+    std::string rank;
+    std::string role;
+
 public:
-    void transform() const override {
-        std::cout << "Transform method called from Decepticon" << std::endl;
-    }
+    Decepticon();
 
-    void openFire() const override {
-        std::cout << "OpenFire method called from Decepticon" << std::endl;
-    }
+    Decepticon(const std::string& name, unsigned health, unsigned level, unsigned strength, unsigned perception, const Weapon& weapon, const std::string& rank, const std::string& role);
 
-    void ultimate() const override {
-        std::cout << "Ultimate method called from Decepticon" << std::endl;
-    }
+    
+
+    void setRank(const std::string& rank);
+    const std::string& getRank() const;
+    
+    void setRole(const std::string& role);
+    const std::string& getRole() const;
+
+    
+    
+    friend std::ostream& operator<<(std::ostream& os, const Decepticon& t);
+    void transform() const override;
+    void openFire() const override;
+    void ulta() const override;
+
+    bool defend();
+    bool heal();
 };
 
-#endif // DECEPTICON_H
+
+#endif
