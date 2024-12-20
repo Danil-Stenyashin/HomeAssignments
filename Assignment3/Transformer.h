@@ -3,25 +3,26 @@
 
 #include <string>
 #include "Weapon.h"
+#include "Vehicle.h"
 
-enum class Direction {
-    Left,
-    Right,
-    Forward,
-    Back
-};
 
 class Transformer {
+private:
+    unsigned int _level;
+    unsigned int _strength;
+    unsigned int _range;
+    unsigned int _fuel;
+    unsigned int _ammo;
+
+    Weapon _weapon;
+    Vehicle* _vehicle;
+    
 public:
     Transformer();
     ~Transformer();
 
     bool move();
-    bool turn(Direction dir);
     bool jump();
-    bool fire();
-    bool ultimate();
-    bool transform();
 
     unsigned int getLevel() const;
     void setLevel(unsigned int level);
@@ -40,23 +41,9 @@ public:
 
     const Weapon& getWeapon() const;
     void setWeapon(const Weapon& weapon);
-
-    const Weapon& getPrimaryWeapon() const;
-    void setPrimaryWeapon(const Weapon& weapon);
-
-    const Weapon& getSecondaryWeapon() const;
-    void setSecondaryWeapon(const Weapon& weapon);
-
-private:
-    unsigned int _level;
-    unsigned int _strength;
-    unsigned int _range;
-    unsigned int _fuel;
-    unsigned int _ammo;
-
-    Weapon* _weapon;
-    Weapon _primaryWeapon;
-    Weapon _secondaryWeapon;
+    
+    const Vehicle* getVehicle() const;
+    void assignVehicle(Vehicle* v);
 };
 
 #endif 

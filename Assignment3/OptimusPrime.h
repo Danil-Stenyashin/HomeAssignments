@@ -5,10 +5,10 @@
 
 class OptimusPrime : public Transformer {
 public:
-    OptimusPrime();
+    OptimusPrime();  
 
-    bool transformToTruck();
-    bool transformToRobot();
+    bool transformToTruck();  
+    bool transformToRobot(); 
 
     unsigned int getTruckSpeed() const;
     void setTruckSpeed(unsigned int speed);

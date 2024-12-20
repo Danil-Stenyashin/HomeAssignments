@@ -1,7 +1,6 @@
 #include "OptimusPrime.h"
 
-OptimusPrime::OptimusPrime() 
-    : _truckSpeed(0), _armorStrength(0), _leadershipLevel(0) {}
+OptimusPrime::OptimusPrime() : _truckSpeed(0), _armorStrength(0), _leadershipLevel(0) {}
 
 bool OptimusPrime::transformToTruck() {
     return true;
