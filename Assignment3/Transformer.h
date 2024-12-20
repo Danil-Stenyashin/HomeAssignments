@@ -17,7 +17,6 @@ public:
     Transformer();
     ~Transformer();
     
-    
     bool move();
     bool turn(Direction dir);
     bool jump();
@@ -43,13 +42,16 @@ public:
     const Weapon& getWeapon() const;
     void setWeapon(const Weapon& weapon);
 
+
 private:
     unsigned int _level;
     unsigned int _strength;
     unsigned int _range;
     unsigned int _fuel;
     unsigned int _ammo;
-
+    Weapon _primaryWeapon;
+    Weapon _secondaryWeapon;
+    
     Weapon* _weapon;
 };
 

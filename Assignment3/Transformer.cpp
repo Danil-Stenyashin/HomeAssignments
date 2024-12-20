@@ -20,6 +20,17 @@ bool Transformer::fire() {
   return false;
 }
 
+Transformer::Transformer()
+    : _level(1), _strength(100), _range(5), _fuel(100), _ammo(100),
+      _weapon(new Weapon("Default Weapon", 10)),
+      _primaryWeapon("Sword", 20), _secondaryWeapon("Shield", 15) {}
+
+const Weapon& Transformer::getPrimaryWeapon() const { return _primaryWeapon; }
+void Transformer::setPrimaryWeapon(const Weapon& weapon) { _primaryWeapon = weapon; }
+
+const Weapon& Transformer::getSecondaryWeapon() const { return _secondaryWeapon; }
+void Transformer::setSecondaryWeapon(const Weapon& weapon) { _secondaryWeapon = weapon; }
+
 bool Transformer::ultimate() { return true; }
 
 bool Transformer::transform() { return true; }

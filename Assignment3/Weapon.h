@@ -1,3 +1,6 @@
+#ifndef WEAPON_H
+#define WEAPON_H
+
 #include <string>
 
 class Weapon {
@@ -19,4 +22,4 @@ public:
     void printInfo() const;
 };
    
-
+#endif // WEAPON_H
