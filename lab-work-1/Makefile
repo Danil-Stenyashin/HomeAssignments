@@ -1,31 +1,21 @@
-# Makefile
-
-# Переменные
 CXX = g++
-CXXFLAGS = -Werror -Wpedantic -Wall
+CXXFLAGS = -Werror -Wpedantic -Wall -std=c++17 -pthread
 SRC = main.cpp bmp.cpp image_processing.cpp
 OBJ = $(SRC:.cpp=.o)
-EXEC = main
+EXEC = image_processor
 
-# Правило по умолчанию
 all: $(EXEC)
 
-# Линкование исполнимого файла
 $(EXEC): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
 
-# Компиляция исходных файлов
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Очистка промежуточных файлов
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -f $(OBJ) $(EXEC) output_*.bmp
 
-# Прочие полезные команды
 run: $(EXEC)
 	./$(EXEC)
 
-format:
-	astyle --style=allman *.cpp *.h
-
+.PHONY: all clean run
