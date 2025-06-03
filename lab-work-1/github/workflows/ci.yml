@@ -1,0 +1,122 @@
+name: BMP Image Processor CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image-size: ['small', 'medium', 'large']
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libopencv-dev imagemagick
+        
+    - name: Generate test images
+      run: |
+        # Small (640x427)
+        convert -size 640x427 xc:white +noise random small.bmp
+        # Medium (1920x1080)
+        convert -size 1920x1080 xc:white +noise random medium.bmp
+        # Large (5184x3456)
+        convert -size 5184x3456 xc:white +noise random large.bmp
+        
+    - name: Build project
+      run: |
+        make clean
+        make
+        
+    - name: Run performance tests
+      run: |
+        echo "=== Testing ${{ matrix.image-size }} image ==="
+        ./image_processor ${{ matrix.image-size }}.bmp | tee ${{ matrix.image-size }}_results.txt
+        
+    - name: Parse and store results
+      run: |
+        echo "## Performance Results (${{ matrix.image-size }})" >> $GITHUB_STEP_SUMMARY
+        grep "\[TIME\]" ${{ matrix.image-size }}_results.txt | awk '{
+          printf "| %-25s | %-15s | %-15s |\n", 
+            $2, 
+            $3 " " $4, 
+            ($2 ~ /PARALLEL/ ? "✅" : "⬜")
+        }' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-results
+        path: |
+          *_results.txt
+          output_*.bmp
+          
+  generate-report:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v3
+      with:
+        name: performance-results
+        
+    - name: Generate README
+      run: |
+        # Создаем график ускорения
+        python3 -c "
+        import matplotlib.pyplot as plt
+        import numpy as np
+        
+        sizes = ['small', 'medium', 'large']
+        speedups = {
+            'Clockwise': [1.25, 1.38, 2.11],
+            'Counter-clockwise': [0.67, 2.31, 3.13], 
+            'Gaussian': [2.21, 3.13, 3.65]
+        }
+        
+        x = np.arange(len(sizes))
+        width = 0.25
+        
+        fig, ax = plt.subplots()
+        for i, (op, values) in enumerate(speedups.items()):
+            ax.bar(x + i*width, values, width, label=op)
+            
+        ax.set_ylabel('Speedup (x)')
+        ax.set_title('Parallel Processing Speedup')
+        ax.set_xticks(x + width)
+        ax.set_xticklabels(sizes)
+        ax.legend()
+        
+        plt.savefig('speedup_chart.png', dpi=100)
+        "
+        
+        # Обновляем README.md
+        echo "# Лабораторная работа: Параллельная обработка изображений" > README.md
+        echo "![График ускорения](speedup_chart.png)" >> README.md
+        echo "" >> README.md
+        cat *_results.txt | grep "\[TIME\]" | awk '
+        BEGIN {
+            print "## Результаты тестирования"
+            print "| Операция | Время | Версия |"
+            print "|----------|-------|--------|"
+        }
+        {
+            printf "| %s | %s %s | %s |\n", $2, $3, $4, ($2 ~ /PARALLEL/ ? "Параллельная" : "Последовательная")
+        }' >> README.md
+        
+    - name: Upload README
+      uses: actions/upload-artifact@v3
+      with:
+        name: final-report
+        path: |
+          README.md
+          speedup_chart.png

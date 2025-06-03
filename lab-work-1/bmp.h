@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <string>
+#include <thread>
+#include <mutex>
+#include <atomic>
 
-// BMP Header Structure
 #pragma pack(push, 1)
 struct BMPHeader {
     char signature[2];  // "BM" (2 bytes)
@@ -36,7 +38,7 @@ struct Pixel {
 
 class BMPImage {
 public:
-    BMPImage(const std::string& filename);
+    BMPImage(const std::string& filename, bool parallel = false);
     
     const BMPHeader& getBMPHeader() const;
     const DIBHeader& getDIBHeader() const;
@@ -46,11 +48,13 @@ public:
     void saveBMP(const std::string& filename) const;
 
 private:
+    void loadBMP_sequential(const std::string& filename);
+    void loadBMP_parallel(const std::string& filename);
+    
+    mutable std::mutex file_mutex;
     BMPHeader bmpHeader;
     DIBHeader dibHeader;
     std::vector<Pixel> pixels;
-
-    void loadBMP(const std::string& filename);
 };
 
 #endif // BMP_H
